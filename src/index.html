@@ -1,12 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dawgstagram</title>
-    <link rel="icon" href="https://fav.mhciael.com/🐶">
+    <title>Rate My Meal</title>
+    <link rel="icon" href="https://fav.mhciael.com/%E2%AD%90">
+
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
-    <h1>Dawgstagram</h1>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-logo">Rate My Meal</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dining Halls</a></li>
+            <li><a href="#">My Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Search and Filter Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="&#128269; Search dining halls...">
+        <select id="sort-select">
+            <option value="highest">Highest Rating</option>
+            <option value="lowest">Lowest Rating</option>
+            <option value="az">Name A-Z</option>
+        </select>
+        <select id="cuisine-select">
+            <option value="all">All Types</option>
+            <option value="assortment">Assortment</option>
+            <option value="american">American</option>
+            <option value="asian">Asian</option>
+            <option value="italian">Italian</option>
+            <option value="mexican">Mexican</option>
+            <option value="cafe">Cafe</option>
+            <option value="bowls">Bowls</option>
+            <option value="convenience">Convenience</option>
+        </select>
+        <button type="submit" class="submit-btn" id="submit-btn">+ Submit a Review</button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h2 class="section-title">Dining Halls <span class="location-count" id="location-count">15 locations</span></h2>
+
+        <!-- Dining Hall Cards Grid -->
+        <div class="card-grid" id="card-grid"></div>
+
+
+    </main>
+
+    <!-- Review Modal (hidden by default) -->
+    <div class="modal" id="review-modal">
+        <div class="modal-box">
+            <button type="submit" class="modal-close" id="close-modal">&#10005;</button>
+            <h2>Submit a Review</h2>
+
+            <form id="review-form">
+                <label for="dining-hall">Dining Hall</label>
+                <select id="dining-hall">
+                    <option value="">-- Select a dining hall --</option>
+                    <option value="dhall">D-Hall</option>
+                    <option value="ehall">E-Hall</option>
+                    <option value="dukes">Dukes Dining</option>
+                    <option value="festival">Festival Food Court</option>
+                    <option value="freshens_urec">Freshens UREC Cafe</option>
+                    <option value="heirloom">Heirloom Pizza</option>
+                    <option value="java_city">Java City</option>
+                    <option value="market64">Market 64</option>
+                    <option value="panda_express">Panda Express</option>
+                    <option value="panera">Panera</option>
+                    <option value="steak_n_shake">Steak n Shake</option>
+                    <option value="tacodillo">Tacodillo</option>
+                    <option value="tlc">Tenders Love Chicken</option>
+                    <option value="dunkin">Dunkin</option>
+                    <option value="bistro1908">Bistro 1908</option>
+                    <option value="starbucks_rose">Starbucks Rose Library</option>
+                    <option value="starbucks_truck">Starbucks Truck</option>
+                    <option value="mr_chips">Mr Chips POD</option>
+                    <option value="pod_jennings">POD Jennings Hall</option>
+                    <option value="den_dennys">The Den by Denny's</option>
+                    <option value="blue_ridge">Blue Ridge Innovations</option>
+                    <option value="freshens_dhall">Freshens D-Hall</option>
+                    <option value="corner_bistro">Corner Bistro</option>
+                    <option value="chickfila_dhall">Chick-fil-A D-Hall</option>
+                    <option value="pod_forbes">POD Forbes Center</option>
+                    <option value="pod_king">POD King Hall</option>
+                    <option value="subway_grace">Subway Grace Street</option>
+                    <option value="merge_coffee">Merge Coffee</option>
+                    <option value="lakeside">Lakeside Cafe</option>
+                    <option value="jemmys">Jemmy’s Corner Market</option>
+                    <option value="dukes_scoops">Dukes Scoops &amp; Cheesesteaks</option>
+                    <option value="chickfila_festival">Chick-fil-A Festival</option>
+                    <option value="burgers_fries">Burgers + Fries</option>
+                    <option value="ignite">Ignite</option>
+                    <option value="madison_press">Madison Press</option>
+                </select>
+
+                <label for="reviewer-name">Your Name</label>
+                <input type="text" id="reviewer-name" placeholder="e.g. Jane Smith" required>
+
+                <label for="star-rating">Rating (1-5)</label>
+                <input type="number" id="star-rating" min="1" max="5" placeholder="e.g. 4" required>
+
+                <label for="review-text">Review</label>
+                <textarea id="review-text" rows="4" placeholder="Write your review here..." required></textarea>
+
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+
+            <!-- Shown after form is submitted -->
+            <div id="confirmation-msg" style="display: none;">
+                <p>&#10003; Thanks for your review! It has been submitted.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+
 </body>
+
 </html>
