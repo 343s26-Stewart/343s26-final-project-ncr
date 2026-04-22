@@ -16,10 +16,10 @@ CLAIMED B8
 CLAIMED *B9
 CLAIMED B10
 
-GRANT *B11: Implemented responsive design that works on mobile devices (320px+ width)
+READY TO CLAIM GRANT *B11: Implemented responsive design that works on mobile devices (320px+ width)
 Assessment: Application is usable and content remains accessible when viewed at 320px width and larger
 
-GRANT *B12: Added basic accessibility features (alt text, proper headings, sufficient color contrast)
+READY TO CLAIM GRANT *B12: Added basic accessibility features (alt text, proper headings, sufficient color contrast)
 Assessment: Images have alt text, heading hierarchy is logical (h1->h2->h3), text/background color contrast ratio meets WCAG guidelines
 
 CLAIMED I15
