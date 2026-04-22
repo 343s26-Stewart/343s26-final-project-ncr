@@ -282,8 +282,9 @@ body {
 .responsive-img {
     max-width: 100%;
     height: auto;
-    padding: 15px;
+    padding: 15px 0px;
     display: block;
+    margin: 0 auto;
 }
 
 @media (max-width: 760px) {
