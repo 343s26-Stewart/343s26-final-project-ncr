@@ -12,15 +12,44 @@
 
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-logo">Rate My Meal</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Dining Halls</a></li>
-            <li><a href="reviews.html" class="active">My Reviews</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </nav>
+    <header>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-logo">Rate My Meal</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Dining Halls</a></li>
+                <li><a href="reviews.html" class="active">My Reviews</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+
+        <section class="search-bar" aria-label="Search dining halls">
+            <label for="search-input" class="visually-hidden">Search dining halls</label>
+            <input type="text" id="search-input" placeholder="&#128269; Search dining halls...">
+
+            <label for="sort-select" class="visually-hidden">Sort dining halls</label>
+            <select id="sort-select">
+                <option value="highest">Highest Rating</option>
+                <option value="lowest">Lowest Rating</option>
+                <option value="az">Name A-Z</option>
+            </select>
+
+            <label for="cuisine-select" class="visually-hidden">Filter by cuisine</label>
+            <select id="cuisine-select">
+                <option value="all">All Types</option>
+                <option value="assortment">Assortment</option>
+                <option value="american">American</option>
+                <option value="asian">Asian</option>
+                <option value="italian">Italian</option>
+                <option value="mexican">Mexican</option>
+                <option value="cafe">Cafe</option>
+                <option value="bowls">Bowls</option>
+                <option value="convenience">Convenience</option>
+            </select>
+
+            <button type="button" class="submit-btn" id="submit-btn">+ Submit a Review</button>
+        </section>
+    </header>
 
     <!-- Main Content -->
     <main class="main-content">
