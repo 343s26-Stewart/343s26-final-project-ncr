@@ -194,7 +194,7 @@ function createCards() {
     cardGrid.innerHTML = "";
 
     locations.forEach(loc => {
-        const card = document.createElement("div");
+        const card = document.createElement("article");
         card.classList.add("card");
 
         card.setAttribute("data-name", loc.name);

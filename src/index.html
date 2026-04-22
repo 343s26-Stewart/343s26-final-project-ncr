@@ -6,62 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate My Meal</title>
     <link rel="icon" href="https://fav.mhciael.com/%E2%AD%90">
-
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
+    <header>
+        <nav class="navbar">
         <div class="nav-logo">Rate My Meal</div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">Dining Halls</a></li>
-            <li><a href="#">My Reviews</a></li>
-        </ul>
-    </nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Dining Halls</a></li>
+                <li><a href="reviews.html">My Reviews</a></li>
+            </ul>
+        </nav>
 
-    <!-- Search and Filter Bar -->
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="&#128269; Search dining halls...">
-        <select id="sort-select">
-            <option value="highest">Highest Rating</option>
-            <option value="lowest">Lowest Rating</option>
-            <option value="az">Name A-Z</option>
-        </select>
-        <select id="cuisine-select">
-            <option value="all">All Types</option>
-            <option value="assortment">Assortment</option>
-            <option value="american">American</option>
-            <option value="asian">Asian</option>
-            <option value="italian">Italian</option>
-            <option value="mexican">Mexican</option>
-            <option value="cafe">Cafe</option>
-            <option value="bowls">Bowls</option>
-            <option value="convenience">Convenience</option>
-        </select>
-        <button type="submit" class="submit-btn" id="submit-btn">+ Submit a Review</button>
-    </div>
+        <section class="search-bar" aria-label="Search dining halls">
+            <label for="search-input" class="visually-hidden">Search dining halls</label>
+            <input type="text" id="search-input" placeholder="&#128269; Search dining halls...">
 
-    <!-- Main Content -->
+            <label for="sort-select" class="visually-hidden">Sort dining halls</label>
+            <select id="sort-select">
+                <option value="highest">Highest Rating</option>
+                <option value="lowest">Lowest Rating</option>
+                <option value="az">Name A-Z</option>
+            </select>
+
+            <label for="cuisine-select" class="visually-hidden">Filter by cuisine</label>
+            <select id="cuisine-select">
+                <option value="all">All Types</option>
+                <option value="assortment">Assortment</option>
+                <option value="american">American</option>
+                <option value="asian">Asian</option>
+                <option value="italian">Italian</option>
+                <option value="mexican">Mexican</option>
+                <option value="cafe">Cafe</option>
+                <option value="bowls">Bowls</option>
+                <option value="convenience">Convenience</option>
+            </select>
+
+            <button type="button" class="submit-btn" id="submit-btn">+ Submit a Review</button>
+        </section>
+    </header>
+
     <main class="main-content">
-        <h2 class="section-title">Dining Halls <span class="location-count" id="location-count">15 locations</span></h2>
-
-        <!-- Dining Hall Cards Grid -->
-        <div class="card-grid" id="card-grid"></div>
-
-
+        <section aria-labelledby="dining-halls-heading">
+            <h1 class="section-title" id="dining-halls-heading">
+                Dining Halls
+                <span class="location-count" id="location-count"> 35 locations</span>
+            </h1>
+            <section class="card-grid" id="card-grid" aria-label="Dining hall listings"></section>
+        </section>
     </main>
 
-    <!-- Review Modal (hidden by default) -->
-    <div class="modal" id="review-modal">
-        <div class="modal-box">
-            <button type="submit" class="modal-close" id="close-modal">&#10005;</button>
+    <aside class="modal" id="review-modal">
+        <section class="modal-box">
+            <button type="button" class="modal-close" id="close-modal" aria-label="Close review form">&#10005;</button>
             <h2>Submit a Review</h2>
 
             <form id="review-form">
                 <label for="dining-hall">Dining Hall</label>
-                <select id="dining-hall">
+                <select id="dining-hall" required>
                     <option value="">-- Select a dining hall --</option>
                     <option value="dhall">D-Hall</option>
                     <option value="ehall">E-Hall</option>
@@ -112,15 +116,16 @@
                 <button type="submit" class="submit-btn">Submit Review</button>
             </form>
 
-            <!-- Shown after form is submitted -->
-            <div id="confirmation-msg" style="display: none;">
+            <div id="confirmation-msg" hidden>
                 <p>&#10003; Thanks for your review! It has been submitted.</p>
             </div>
-        </div>
-    </div>
+        </section>
+    </aside>
+
+    <footer class="footer">
+        © 2026 Rate My Meal
+    </footer>
 
     <script src="scripts/main.js"></script>
-
 </body>
-
 </html>
