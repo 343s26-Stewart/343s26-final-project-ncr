@@ -212,6 +212,11 @@ function createCards() {
             </div>
         `;
 
+        card.style.cursor = "pointer";
+        card.addEventListener("click", function () {
+            window.location.href = `location.html?id=${loc.id}`;
+        });
+
         cardGrid.appendChild(card);
     });
 
