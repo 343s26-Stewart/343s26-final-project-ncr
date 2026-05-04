@@ -5,7 +5,7 @@ CLAIMED B2
 CLAIMED B3
 CLAIMED *B4
 
-PATRICK B5: Integrated with a chosen third-party API and successfully retrieved data
+READY TO CLAIM PATRICK B5: Integrated with a chosen third-party API and successfully retrieved data
 Assessment: API calls execute successfully, data is fetched and displayed on the page, API source is documented
 
 READY TO CLAIM DYLAN B6: Implemented localStorage or OPFS to save and retrieve user data
@@ -22,8 +22,11 @@ Assessment: Application is usable and content remains accessible when viewed at 
 READY TO CLAIM GRANT *B12: Added basic accessibility features (alt text, proper headings, sufficient color contrast)
 Assessment: Images have alt text, heading hierarchy is logical (h1->h2->h3), text/background color contrast ratio meets WCAG guidelines
 
+READY TO CLAIM I13
+
 CLAIMED I15
 CLAIMED I16
 CLAIMED I17
 
 READY TO CLAIM I22
+READY TO CLAIM I27
