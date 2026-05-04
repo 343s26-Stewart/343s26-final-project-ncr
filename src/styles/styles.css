@@ -27,7 +27,8 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
-.nav-logo {
+.nav-logo > a {
+    text-decoration: none;
     font-size: 20px;
     font-weight: bold;
     color: #b84a1a;
@@ -45,6 +46,10 @@ body {
     text-decoration: none;
     color: #555;
     font-size: 15px;
+}
+
+.nav-links a:hover {
+    color: #b84a1a;
 }
 
 .nav-links a.active {
@@ -80,6 +85,10 @@ body {
     border-radius: 20px;
     font-size: 14px;
     background-color: white;
+}
+
+section > select:hover {
+    border-color: #b84a1a;
 }
 
 .submit-btn {
@@ -128,8 +137,17 @@ body {
     border-radius: 12px;
     padding: 16px;
     border: 1px solid #e0ddd8;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+section > .card:hover {
+    background-color: #f7f1ec;
+    transform: translateY(-2px);
+}
+.card:focus {
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
+}
 .card-name {
     font-size: 16px;
     font-weight: bold;

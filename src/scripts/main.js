@@ -194,6 +194,7 @@ function createCards() {
     locations.forEach(loc => {
         const card = document.createElement("article");
         card.classList.add("card");
+        card.setAttribute("tabindex", "0");
 
         card.setAttribute("data-name", loc.name);
         card.setAttribute("data-id", loc.id);
@@ -228,6 +229,14 @@ function createCards() {
         card.style.cursor = "pointer";
         card.addEventListener("click", function () {
             window.location.href = `location.html?id=${loc.id}`;
+        });
+
+        // Add keyboard accessibility
+        card.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.href = `location.html?id=${loc.id}`;
+            }
         });
 
         cardGrid.appendChild(card);
