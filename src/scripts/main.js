@@ -49,6 +49,10 @@ const closeModal = document.getElementById("close-modal");
 const reviewForm = document.getElementById("review-form");
 const confirmationMsg = document.getElementById("confirmation-msg");
 
+// Global variables
+let allCards = [];
+let allReviewCards = [];
+
 // Helper: get a card's rating number
 function getRating(card) {
     const val = parseFloat(card.getAttribute("data-rating"));
@@ -101,9 +105,21 @@ function updateCards() {
 }
 
 // Event Listeners for search, sort, and cuisine
-searchInput.addEventListener("input", updateCards);
-sortSelect.addEventListener("change", updateCards);
-cuisineSelect.addEventListener("change", updateCards);
+function setupFilterListeners() {
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage === 'reviews.html') {
+        searchInput.addEventListener("input", updateReviewCards);
+        sortSelect.addEventListener("change", updateReviewCards);
+        cuisineSelect.addEventListener("change", updateReviewCards);
+    } else {
+        searchInput.addEventListener("input", updateCards);
+        sortSelect.addEventListener("change", updateCards);
+        cuisineSelect.addEventListener("change", updateCards);
+    }
+}
+
+setupFilterListeners();
 
 // Modal: Open when Submit a Review is clicked
 submitBtn.addEventListener("click", function () {
@@ -138,7 +154,8 @@ reviewForm.addEventListener("submit", function (event) {
         name: name,
         rating: rating,
         text: text,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        local: true
     };
 
     let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
@@ -187,15 +204,60 @@ function getAverageRating(hallId) {
     return sum / reviews.length;
 }
 
-function getReviewCount(hallId) {
-    return getReviews().filter(r => r.hallId === hallId).length;
+function updateReviewCards() {
+    const searchText = searchInput.value.toLowerCase();
+    const selectedCuisine = cuisineSelect.value.toLowerCase();
+    const selectedSort = sortSelect.value;
+
+    // Filter cards based on search and cuisine
+    let visibleCards = allReviewCards.filter(card => {
+        const hallName = card.getAttribute("data-hall-name");
+        const reviewer = card.getAttribute("data-reviewer");
+        const cuisine = card.getAttribute("data-cuisine");
+
+        const matchesSearch = hallName.includes(searchText) || reviewer.includes(searchText);
+        const matchesCuisine = selectedCuisine === "all" || cuisine === selectedCuisine;
+
+        return matchesSearch && matchesCuisine;
+    });
+
+    // Sort the filtered cards
+    visibleCards.sort((a, b) => {
+        switch (selectedSort) {
+            case "newest":
+                return new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date"));
+            case "oldest":
+                return new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date"));
+            case "highest":
+                return parseFloat(b.getAttribute("data-rating")) - parseFloat(a.getAttribute("data-rating"));
+            case "lowest":
+                return parseFloat(a.getAttribute("data-rating")) - parseFloat(b.getAttribute("data-rating"));
+            case "az":
+                return a.getAttribute("data-hall-name").localeCompare(b.getAttribute("data-hall-name"));
+            default:
+                return 0;
+        }
+    });
+
+    // Get the reviews grid
+    const reviewsGrid = document.getElementById("reviews-grid");
+
+    // Clear the grid
+    reviewsGrid.innerHTML = "";
+
+    // Re-append cards in sorted order
+    visibleCards.forEach(card => {
+        reviewsGrid.appendChild(card);
+    });
 }
 
 function displayUserReviews() {
     const reviewsGrid = document.getElementById("reviews-grid");
     if (!reviewsGrid) return;
 
-    const reviews = getReviews();
+    const allReviews = getReviews();
+    // Filter to only show local reviews (user-submitted, not imported)
+    const reviews = allReviews.filter(review => review.local === true);
 
     if (reviews.length === 0) {
         // Keep the default "No Reviews Yet" message
@@ -205,16 +267,16 @@ function displayUserReviews() {
     // Clear the default message
     reviewsGrid.innerHTML = "";
 
-    // Sort reviews by date (newest first)
-    reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    // Create cards for each review
+    // Create cards for each review (don't sort here - updateReviewCards will handle sorting)
+    allReviewCards = [];
     reviews.forEach(review => {
         const card = document.createElement("article");
         card.classList.add("card");
 
-        // Find the dining hall name
-        const hallName = locations.find(loc => loc.id === review.hallId)?.name || review.hallId;
+        // Find the dining hall name and cuisine
+        const hall = locations.find(loc => loc.id === review.hallId);
+        const hallName = hall?.name || review.hallId;
+        const hallCuisine = hall?.cuisine || "unknown";
 
         const starsHTML = generateStars(review.rating);
         const date = new Date(review.date).toLocaleDateString();
@@ -229,7 +291,15 @@ function displayUserReviews() {
             </div>
         `;
 
+        // Store review data on the card for filtering
+        card.setAttribute("data-hall-name", hallName.toLowerCase());
+        card.setAttribute("data-reviewer", review.name.toLowerCase());
+        card.setAttribute("data-rating", review.rating);
+        card.setAttribute("data-cuisine", hallCuisine);
+        card.setAttribute("data-date", review.date);
+
         reviewsGrid.appendChild(card);
+        allReviewCards.push(card);
     });
 }
 
@@ -298,6 +368,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentPage === 'reviews.html') {
         displayUserReviews();
+        updateReviewCards(); // Show all cards initially
     } else if (currentPage === 'index.html' || currentPage === '') {
         createCards();
         updateCards();
