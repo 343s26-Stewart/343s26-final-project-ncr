@@ -362,6 +362,16 @@
         document.getElementById("fetch-google-reviews")
             .addEventListener("click", fetchGoogleReviews);
 
+        document.getElementById("open-review-btn").addEventListener("click", () => {
+        document.getElementById("review-modal").style.display = "flex";
+        document.getElementById("confirmation-msg").style.display = "none";
+        document.getElementById("review-form").style.display = "block";
+        });
+
+        document.getElementById("close-modal").addEventListener("click", () => {
+        document.getElementById("review-modal").style.display = "none";
+        });
+
         initHeader();
         setupReviewForm();
         renderReviews();
