@@ -204,6 +204,10 @@ function getAverageRating(hallId) {
     return sum / reviews.length;
 }
 
+function getReviewCount(hallId) {
+    return getReviews().filter(r => r.hallId === hallId).length;
+}
+
 function updateReviewCards() {
     const searchText = searchInput.value.toLowerCase();
     const selectedCuisine = cuisineSelect.value.toLowerCase();
