@@ -145,13 +145,17 @@ reviewForm.addEventListener("submit", function (event) {
     reviews.push(review);
     localStorage.setItem("reviews", JSON.stringify(reviews));
 
-    createCards();
-    updateCards();
+    // Check which page we're on and refresh accordingly
+    const currentPage = window.location.pathname.split('/').pop();
+    if (currentPage === 'reviews.html') {
+        displayUserReviews();
+    } else {
+        createCards();
+        updateCards();
+    }
 
     reviewForm.style.display = "none";
     confirmationMsg.style.display = "block";
-
-    updateCards();
     reviewForm.reset();
 });
 
@@ -185,6 +189,48 @@ function getAverageRating(hallId) {
 
 function getReviewCount(hallId) {
     return getReviews().filter(r => r.hallId === hallId).length;
+}
+
+function displayUserReviews() {
+    const reviewsGrid = document.getElementById("reviews-grid");
+    if (!reviewsGrid) return;
+
+    const reviews = getReviews();
+
+    if (reviews.length === 0) {
+        // Keep the default "No Reviews Yet" message
+        return;
+    }
+
+    // Clear the default message
+    reviewsGrid.innerHTML = "";
+
+    // Sort reviews by date (newest first)
+    reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Create cards for each review
+    reviews.forEach(review => {
+        const card = document.createElement("article");
+        card.classList.add("card");
+
+        // Find the dining hall name
+        const hallName = locations.find(loc => loc.id === review.hallId)?.name || review.hallId;
+
+        const starsHTML = generateStars(review.rating);
+        const date = new Date(review.date).toLocaleDateString();
+
+        card.innerHTML = `
+            <h3 class="card-name">${hallName}</h3>
+            <div class="stars">${starsHTML}</div>
+            <p class="review-text">"${review.text}"</p>
+            <div class="review-meta">
+                <span class="reviewer">By: ${review.name}</span>
+                <span class="review-date">${date}</span>
+            </div>
+        `;
+
+        reviewsGrid.appendChild(card);
+    });
 }
 
 
@@ -247,6 +293,13 @@ function createCards() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    createCards();
-    updateCards();
+    // Check which page we're on
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage === 'reviews.html') {
+        displayUserReviews();
+    } else if (currentPage === 'index.html' || currentPage === '') {
+        createCards();
+        updateCards();
+    }
 });

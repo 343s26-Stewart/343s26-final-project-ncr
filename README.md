@@ -8,7 +8,7 @@ CLAIMED *B4
 PATRICK B5: Integrated with a chosen third-party API and successfully retrieved data
 Assessment: API calls execute successfully, data is fetched and displayed on the page, API source is documented
 
-DYLAN B6: Implemented localStorage or OPFS to save and retrieve user data
+READY TO CLAIM DYLAN B6: Implemented localStorage or OPFS to save and retrieve user data
 Assessment: Data is saved to localStorage or OPFS, persists after page refresh, can be retrieved and displayed
 
 CLAIMED B7

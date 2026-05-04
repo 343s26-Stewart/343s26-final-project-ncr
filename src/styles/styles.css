@@ -277,6 +277,31 @@ section > .card:hover {
     color: #666;
 }
 
+/* Review-specific styles */
+.review-text {
+    font-style: italic;
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #888;
+}
+
+.reviewer {
+    font-weight: bold;
+}
+
+.review-date {
+    font-style: italic;
+}
+
 /* Footer */
 .footer {
     text-align: center;
