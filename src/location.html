@@ -320,7 +320,8 @@
                     name: document.getElementById("reviewer-name").value.trim(),
                     rating: parseFloat(document.getElementById("star-rating").value),
                     text: document.getElementById("review-text").value.trim(),
-                    date: new Date().toISOString()
+                    date: new Date().toISOString(),
+                    local: true
                 };
 
                 const all = getAllReviews();
