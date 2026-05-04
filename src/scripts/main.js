@@ -195,6 +195,26 @@ function getReviews() {
     return JSON.parse(localStorage.getItem("reviews")) || [];
 }
 
+function clearAllReviews() {
+    localStorage.removeItem("reviews");
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("google_imported_")) {
+            localStorage.removeItem(key);
+        }
+    });
+
+    // Reset filters to default
+    searchInput.value = "";
+    sortSelect.value = "newest";
+    cuisineSelect.value = "all";
+
+    reviewsGrid.innerHTML = "";
+
+
+    displayUserReviews();
+    updateReviewCards();
+}
+
 function getAverageRating(hallId) {
     const reviews = getReviews().filter(r => r.hallId === hallId);
 
@@ -246,8 +266,23 @@ function updateReviewCards() {
     // Get the reviews grid
     const reviewsGrid = document.getElementById("reviews-grid");
 
+    // If there are no review cards loaded, keep the default message in place
+    if (allReviewCards.length === 0) {
+        return;
+    }
+
     // Clear the grid
     reviewsGrid.innerHTML = "";
+
+    if (visibleCards.length === 0) {
+        reviewsGrid.innerHTML = `
+            <article class="card">
+                <h3 class="card-name">No reviews found</h3>
+                <p class="empty-text">Try a different search or filter.</p>
+            </article>
+        `;
+        return;
+    }
 
     // Re-append cards in sorted order
     visibleCards.forEach(card => {
@@ -372,6 +407,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentPage === 'reviews.html') {
         displayUserReviews();
+
+        const clearButton = document.getElementById("clear-reviews-btn");
+        if (clearButton) {
+            clearButton.addEventListener("click", function () {
+                if (confirm("Delete all saved reviews and imported review data?")) {
+                    clearAllReviews();
+                }
+            });
+        }
+
         updateReviewCards(); // Show all cards initially
     } else if (currentPage === 'index.html' || currentPage === '') {
         createCards();
