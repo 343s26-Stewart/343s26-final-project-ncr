@@ -354,6 +354,14 @@
             meta.textContent = `${locationData.cuisine} • ${locationData.campus}`;
         }
 
+        function populateHallDropdown() {
+            const hallSelect = document.getElementById("dining-hall");
+            hallSelect.innerHTML = locations
+                .map(loc => `<option value="${loc.id}">${loc.name}</option>`)
+                .join("");
+            hallSelect.value = hallId || "";
+        }
+
         document.getElementById("review-sort")
             .addEventListener("change", () => {
                 renderReviews();
@@ -363,16 +371,20 @@
             .addEventListener("click", fetchGoogleReviews);
 
         document.getElementById("open-review-btn").addEventListener("click", () => {
-        document.getElementById("review-modal").style.display = "flex";
-        document.getElementById("confirmation-msg").style.display = "none";
-        document.getElementById("review-form").style.display = "block";
+            const hallSelect = document.getElementById("dining-hall");
+            hallSelect.value = hallId;
+
+            document.getElementById("review-modal").style.display = "flex";
+            document.getElementById("confirmation-msg").style.display = "none";
+            document.getElementById("review-form").style.display = "block";
         });
 
         document.getElementById("close-modal").addEventListener("click", () => {
-        document.getElementById("review-modal").style.display = "none";
+            document.getElementById("review-modal").style.display = "none";
         });
 
         initHeader();
+        populateHallDropdown();
         setupReviewForm();
         renderReviews();
         updateOverview();
