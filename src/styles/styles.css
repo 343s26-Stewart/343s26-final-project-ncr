@@ -120,7 +120,7 @@ section > select:hover {
 .location-count {
     font-size: 15px;
     font-weight: normal;
-    color: #888;
+    color: #4D4D4D;
     margin-left: 8px;
 }
 
@@ -157,7 +157,7 @@ section > .card:hover {
 
 /* Star Ratings */
 .stars {
-    color: #c85a1a;
+    color: #b84a1a;
     font-size: 16px;
     margin-bottom: 8px;
 }
@@ -291,7 +291,7 @@ section > .card:hover {
     align-items: center;
     margin-top: 8px;
     font-size: 12px;
-    color: #888;
+    color: #4D4D4D;
 }
 
 .reviewer {
@@ -306,7 +306,7 @@ section > .card:hover {
 .footer {
     text-align: center;
     padding: 20px;
-    color: #888;
+    color: #4D4D4D;
     font-size: 13px;
 }
 

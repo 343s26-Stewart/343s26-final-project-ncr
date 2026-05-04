@@ -277,7 +277,7 @@ function updateReviewCards() {
     if (visibleCards.length === 0) {
         reviewsGrid.innerHTML = `
             <article class="card">
-                <h3 class="card-name">No reviews found</h3>
+                <h2 class="card-name">No reviews found</h2>
                 <p class="empty-text">Try a different search or filter.</p>
             </article>
         `;
@@ -321,7 +321,7 @@ function displayUserReviews() {
         const date = new Date(review.date).toLocaleDateString();
 
         card.innerHTML = `
-            <h3 class="card-name">${hallName}</h3>
+            <h2 class="card-name">${hallName}</h2>
             <div class="stars">${starsHTML}</div>
             <p class="review-text">"${review.text}"</p>
             <div class="review-meta">
@@ -372,7 +372,7 @@ function createCards() {
         }
 
         card.innerHTML = `
-            <h3 class="card-name">${loc.name}</h3>
+            <h2 class="card-name">${loc.name}</h2>
             <div class="stars">${starsHTML}</div>
             <span class="tag">${loc.cuisine}</span>
             <div class="card-footer">
