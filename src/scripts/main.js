@@ -97,9 +97,9 @@ function updateCards() {
     });
 
     visibleCards.forEach(function (card) {
-        card.style.display = "block";
+        card.style.display = "";
         cardGrid.appendChild(card);
-    });
+});
 
     locationCount.textContent = visibleCards.length + " locations";
 }
@@ -402,7 +402,6 @@ function createCards() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Check which page we're on
     const currentPage = window.location.pathname.split('/').pop();
 
     if (currentPage === 'reviews.html') {
@@ -417,9 +416,69 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        updateReviewCards(); // Show all cards initially
-    } else if (currentPage === 'index.html' || currentPage === '') {
+        updateReviewCards();
+        setupViewToggle();
+    } 
+    else if (currentPage === 'index.html' || currentPage === '') {
         createCards();
         updateCards();
+        setupViewToggle();
     }
 });
+
+function setupViewToggle() {
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage !== "index.html" && currentPage !== "" && currentPage !== "reviews.html") {
+        return;
+    }
+
+    const menuBtn = document.getElementById("view-menu-btn");
+    const menuDropdown = document.getElementById("view-menu-dropdown");
+    const cardViewBtn = document.getElementById("card-view-btn");
+    const listViewBtn = document.getElementById("list-view-btn");
+
+    const grid = currentPage === "reviews.html"
+        ? document.getElementById("reviews-grid")
+        : document.getElementById("card-grid");
+
+    if (!menuBtn || !menuDropdown || !cardViewBtn || !listViewBtn || !grid) {
+        return;
+    }
+
+    function applyView(view) {
+        if (view === "list") {
+            grid.classList.add("list-view");
+            listViewBtn.classList.add("active");
+            cardViewBtn.classList.remove("active");
+        } else {
+            grid.classList.remove("list-view");
+            cardViewBtn.classList.add("active");
+            listViewBtn.classList.remove("active");
+        }
+
+        localStorage.setItem("viewMode", view);
+        menuDropdown.classList.remove("show");
+    }
+
+    applyView(localStorage.getItem("viewMode") || "cards");
+
+    menuBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        menuDropdown.classList.toggle("show");
+    });
+
+    cardViewBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        applyView("cards");
+    });
+
+    listViewBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        applyView("list");
+    });
+
+    document.addEventListener("click", function () {
+        menuDropdown.classList.remove("show");
+    });
+}
