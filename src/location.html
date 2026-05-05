@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining Hall Details</title>
+    <link rel="icon" href="https://fav.mhciael.com/%E2%AD%90">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo"><a href="index.html">Rate My Meal</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Dining Halls</a></li>
+                <li><a href="reviews.html">My Reviews</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <section class="card summary-card">
+            <h1 id="location-title">Loading...</h1>
+            <p id="location-meta"></p>
+
+            <div id="average-rating">
+                <span id="avg-number">0.0</span>
+                <span id="avg-stars" class="stars"></span>
+                <span id="review-count"></span>
+            </div>
+        </section>
+
+        <section>
+
+            <div class="reviews-header">
+                <h2>Reviews</h2>
+
+                <div class="reviews-controls">
+                    <label for="review-sort">Sort:</label>
+                    <select id="review-sort">
+                        <option value="newest">Newest</option>
+                        <option value="highest">Highest Rating</option>
+                        <option value="lowest">Lowest Rating</option>
+                    </select>
+
+                    <button type="button" class="submit-btn" id="open-review-btn">
+                        + Submit a Review
+                    </button>
+
+                    <button type="button" id="fetch-google-reviews" class="submit-btn">
+                        Get Other Reviews
+                    </button>
+                </div>
+            </div>
+
+            <div id="reviews-container"></div>
+        </section>
+
+    </main>
+
+    <aside class="modal" id="review-modal">
+        <section class="modal-box">
+            <button type="button" class="modal-close" id="close-modal">&#10005;</button>
+            <h2>Submit a Review</h2>
+
+            <form id="review-form">
+                <label for="dining-hall">Dining Hall</label>
+                <select id="dining-hall" required disabled aria-disabled="true">
+                    <!-- SAME OPTIONS AS BEFORE -->
+                </select>
+
+                <label for="reviewer-name">Your Name</label>
+                <input type="text" id="reviewer-name" required>
+
+                <label for="star-rating">Rating (1-5)</label>
+                <input type="number" id="star-rating" min="1" max="5" required>
+
+                <label for="review-text">Review</label>
+                <textarea id="review-text" rows="4" required></textarea>
+
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+
+            <div id="confirmation-msg" hidden>
+                <p>✓ Thanks for your review!</p>
+            </div>
+        </section>
+    </aside>
+
+    <footer class="footer">
+        © 2026 Rate My Meal
+    </footer>
+
+    <script>
+
+        /* =========================
+            DATA + STATE
+        ========================= */
+
+        const locations = [
+            { id: "dhall", name: "D-Hall", cuisine: "assortment", campus: "Main Campus", placeId: "ChIJb7HfUeyTtIkRDmjtNXb5XUw" },
+            { id: "ehall", name: "E-Hall", cuisine: "assortment", campus: "East Campus", placeId: "ChIJUbvCtJSStIkREfunIrV2pS4" },
+            { id: "dukes", name: "Dukes Dining", cuisine: "assortment", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "festival", name: "Festival Food Court", cuisine: "assortment", campus: "East Campus", placeId: "ChIJFTpZZPeTtIkRsDFhwXFVSg0" },
+            { id: "freshens_urec", name: "Freshens UREC Cafe", cuisine: "bowls", campus: "East Campus", placeId: "NO_REVIEWS" },
+            { id: "heirloom", name: "Heirloom Pizza", cuisine: "italian", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+            { id: "java_city", name: "Java City", cuisine: "cafe", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "market64", name: "Market 64", cuisine: "convenience", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "panda_express", name: "Panda Express", cuisine: "asian", campus: "Dukes Dining", placeId: "ChIJiw6FVTCTtIkR02Jx383iL2Q" },
+            { id: "panera", name: "Panera", cuisine: "american", campus: "Dukes Dining", placeId: "ChIJX8U_XRyTtIkRMzah1pKAd3g" },
+            { id: "steak_n_shake", name: "Steak n Shake", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "tacodillo", name: "Tacodillo", cuisine: "mexican", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+            { id: "tlc", name: "Tenders Love Chicken", cuisine: "american", campus: "East Campus", placeId: "NO_REVIEWS" },
+            { id: "dunkin", name: "Dunkin", cuisine: "cafe", campus: "Main Campus", placeId: "ChIJ_6JuSMOStIkRD7_N_m-07y0" },
+            { id: "bistro1908", name: "Bistro 1908", cuisine: "american", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "starbucks_rose", name: "Starbucks Rose Library", cuisine: "cafe", campus: "East Campus", placeId: "ChIJhf6TwpSStIkRpLC9-Qx-CYw" },
+            { id: "starbucks_truck", name: "Starbucks Truck", cuisine: "cafe", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "mr_chips", name: "Mr Chips POD", cuisine: "convenience", campus: "Main Campus", placeId: "ChIJCxE8i8KStIkRcvZgxlPn1yk" },
+            { id: "pod_jennings", name: "POD Jennings Hall", cuisine: "convenience", campus: "East Campus", placeId: "NO_REVIEWS" },
+            { id: "den_dennys", name: "The Den by Denny's", cuisine: "american", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+            { id: "blue_ridge", name: "Blue Ridge Innovations", cuisine: "bowls", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+            { id: "freshens_dhall", name: "Freshens D-Hall", cuisine: "bowls", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "corner_bistro", name: "Corner Bistro", cuisine: "american", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "chickfila_dhall", name: "Chick-fil-A D-Hall", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "pod_forbes", name: "POD Forbes Center", cuisine: "convenience", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "pod_king", name: "POD King Hall", cuisine: "convenience", campus: "East Campus", placeId: "NO_REVIEWS" },
+            { id: "subway_grace", name: "Subway Grace Street", cuisine: "american", campus: "Main Campus", placeId: "ChIJXYqag9uStIkRA552BE4bDZk" },
+            { id: "merge_coffee", name: "Merge Coffee", cuisine: "cafe", campus: "Main Campus", placeId: "ChIJ8ZQousXttIkR2F38QF8inYU" },
+            { id: "lakeside", name: "Lakeside Cafe", cuisine: "cafe", campus: "Main Campus", placeId: "NO_REVIEWS" },
+            { id: "jemmys", name: "Jemmy’s Corner Market", cuisine: "convenience", campus: "E-Hall", placeId: "NO_REVIEWS" },
+            { id: "dukes_scoops", name: "Dukes Scoops & Cheesesteaks", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+            { id: "chickfila_festival", name: "Chick-fil-A Festival", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+            { id: "burgers_fries", name: "Burgers + Fries", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+            { id: "ignite", name: "Ignite", cuisine: "italian", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+            { id: "madison_press", name: "Madison Press", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" }
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const hallId = params.get("id");
+
+        /* =========================
+                DATA HELPERS
+        ========================= */
+
+        function getAllReviews() {
+            return JSON.parse(localStorage.getItem("reviews")) || [];
+        }
+
+        function getFilteredReviews() {
+            return getAllReviews().filter(r => r.hallId === hallId);
+        }
+
+        function saveReviews(reviews) {
+            localStorage.setItem("reviews", JSON.stringify(reviews));
+        }
+
+        function googleAlreadyImported(hallId) {
+            const flag = localStorage.getItem(`google_imported_${hallId}`);
+            return flag === "true";
+        }
+
+        function markGoogleImported(hallId) {
+            localStorage.setItem(`google_imported_${hallId}`, "true");
+        }
+
+        /* =========================
+                STATS / LOGIC
+        ========================= */
+
+        function generateStars(rating) {
+            let stars = "";
+            const rounded = Math.round(rating);
+
+            for (let i = 0; i < 5; i++) {
+                stars += i < rounded ? "&#9733;" : "&#9734;";
+            }
+
+            return stars;
+        }
+
+        function updateOverview() {
+            const reviews = getFilteredReviews();
+
+            const avgNumber = document.getElementById("avg-number");
+            const avgStars = document.getElementById("avg-stars");
+            const reviewCount = document.getElementById("review-count");
+
+            if (reviews.length === 0) {
+                avgNumber.textContent = "No rating";
+                avgStars.textContent = "";
+                reviewCount.textContent = "(0 reviews)";
+                return;
+            }
+
+            const avg = reviews.reduce((a, r) => a + r.rating, 0) / reviews.length;
+
+            avgNumber.textContent = avg.toFixed(1);
+            avgStars.innerHTML = generateStars(avg);
+            reviewCount.textContent = `(${reviews.length} reviews)`;
+        }
+
+        /* =========================
+                RENDERING
+        ========================= */
+
+        function renderReviews() {
+            const container = document.getElementById("reviews-container");
+            const sortSelect = document.getElementById("review-sort");
+
+            let reviews = [...getFilteredReviews()];
+
+            if (sortSelect.value === "highest") {
+                reviews.sort((a, b) => b.rating - a.rating);
+            } else if (sortSelect.value === "lowest") {
+                reviews.sort((a, b) => a.rating - b.rating);
+            } else {
+                reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            container.innerHTML = "";
+
+            if (reviews.length === 0) {
+                container.innerHTML = "<p>No reviews yet.</p>";
+                return;
+            }
+
+            reviews.forEach(r => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+
+                card.innerHTML = `
+            <h3 class="card-name">${r.name}</h3>
+            <div class="stars">${generateStars(r.rating)}</div>
+            <p class="review-text">${r.text}</p>
+            <div class="card-footer">
+                <span>${new Date(r.date).toLocaleDateString()}</span>
+                <span>${r.rating.toFixed(1)}</span>
+            </div>
+        `;
+
+                container.appendChild(card);
+            });
+        }
+
+        /* =========================
+                GOOGLE REVIEWS
+        ========================= */
+
+        function fetchGoogleReviews() {
+            const loc = locations.find(l => l.id === hallId);
+
+            if (!loc?.placeId) {
+                alert("No Google data for this location");
+                return;
+            }
+
+            if (googleAlreadyImported(hallId)) {
+                alert("Reviews already imported");
+                return;
+            }
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 0, lng: 0 },
+                zoom: 1
+            });
+
+            const service = new google.maps.places.PlacesService(map);
+
+            service.getDetails(
+                {
+                    placeId: loc.placeId,
+                    fields: ["reviews"]
+                },
+                (place, status) => {
+                    if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
+                        alert("Failed to load Google reviews.");
+                        return;
+                    }
+
+                    const googleReviews = place.reviews || [];
+
+                    const converted = googleReviews.map(r => ({
+                        hallId,
+                        name: r.authorAttribution?.displayName || "Google User",
+                        rating: r.rating,
+                        text: r.text,
+                        date: new Date().toISOString(),
+                        source: "google"
+                    }));
+
+                    if (!googleAlreadyImported(hallId)) {
+                        const all = getAllReviews();
+                        saveReviews([...all, ...converted]);
+                        markGoogleImported(hallId);
+                    }
+
+                    renderReviews();
+                    updateOverview();
+                }
+            );
+        }
+
+        /* =========================
+                REVIEW SUBMISSION
+        ========================= */
+
+        function setupReviewForm() {
+            const form = document.getElementById("review-form");
+
+            form.addEventListener("submit", e => {
+                e.preventDefault();
+
+                const review = {
+                    hallId,
+                    name: document.getElementById("reviewer-name").value.trim(),
+                    rating: parseFloat(document.getElementById("star-rating").value),
+                    text: document.getElementById("review-text").value.trim(),
+                    date: new Date().toISOString(),
+                    local: true
+                };
+
+                const all = getAllReviews();
+                saveReviews([...all, review]);
+
+                renderReviews();
+                updateOverview();
+
+                document.getElementById("review-form").style.display = "none";
+                document.getElementById("confirmation-msg").style.display = "block";
+            });
+        }
+
+        /* =========================
+                INIT
+        ========================= */
+
+        function initHeader() {
+            const locationData = locations.find(loc => loc.id === hallId);
+
+            const title = document.getElementById("location-title");
+            const meta = document.getElementById("location-meta");
+
+            if (!locationData) {
+                title.textContent = "Location not found";
+                meta.textContent = "";
+                return;
+            }
+
+            title.textContent = locationData.name;
+            meta.textContent = `${locationData.cuisine} • ${locationData.campus}`;
+        }
+
+        function populateHallDropdown() {
+            const hallSelect = document.getElementById("dining-hall");
+            hallSelect.innerHTML = locations
+                .map(loc => `<option value="${loc.id}">${loc.name}</option>`)
+                .join("");
+            hallSelect.value = hallId || "";
+        }
+
+        document.getElementById("review-sort")
+            .addEventListener("change", () => {
+                renderReviews();
+            });
+
+        document.getElementById("fetch-google-reviews")
+            .addEventListener("click", fetchGoogleReviews);
+
+        document.getElementById("open-review-btn").addEventListener("click", () => {
+            const hallSelect = document.getElementById("dining-hall");
+            hallSelect.value = hallId;
+
+            document.getElementById("review-modal").style.display = "flex";
+            document.getElementById("confirmation-msg").style.display = "none";
+            document.getElementById("review-form").style.display = "block";
+        });
+
+        document.getElementById("close-modal").addEventListener("click", () => {
+            document.getElementById("review-modal").style.display = "none";
+        });
+
+        initHeader();
+        populateHallDropdown();
+        setupReviewForm();
+        renderReviews();
+        updateOverview();
+    </script>
+
+    <div id="map" style="display:none;"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcBZXxR3290udZboPdxuaCF8qmxS8MjPA&libraries=places">
+        </script>
+</body>
+
+</html>

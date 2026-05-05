@@ -1,36 +1,52 @@
 # Rate My Meal
+## Basic Claims
+CLAIMED B1 \
+CLAIMED B2 \
+CLAIMED B3 \
+CLAIMED B4 \
+CLAIMED B5 \
+CLAIMED B6 \
+CLAIMED B7 \
+CLAIMED B8 \
+CLAIMED B9 \
+CLAIMED B10 \
+CLAIMED B11 \
+READY TO CLAIM B12
 
-CLAIMED B1
-CLAIMED B2
-CLAIMED B3
-CLAIMED *B4
+## Intermediate Claims
+CLAIMED I13 \
+INCOMPLETE I14 \
+CLAIMED I15 \
+CLAIMED I16 \
+CLAIMED I17 \
+INCOMPLETE I18 \
+INCOMPLETE I19 \
+INCOMPLETE I20 \
+INCOMPLETE I21 \
+CLAIMED I22 \
+INCOMPLETE I23 \
+INCOMPLETE I24 \
+INCOMPLETE I25 \
+INCOMPLETE I26 \
+CLAIMED I27 \
+INCOMPLETE I28 \
+INCOMPLETE I29 
 
-PATRICK B5: Integrated with a chosen third-party API and successfully retrieved data
-Assessment: API calls execute successfully, data is fetched and displayed on the page, API source is documented
+## Stretch Claims
 
-DYLAN B6: Implemented localStorage or OPFS to save and retrieve user data
-Assessment: Data is saved to localStorage or OPFS, persists after page refresh, can be retrieved and displayed
-
-CLAIMED B7
-CLAIMED B8
-CLAIMED *B9
-CLAIMED B10
-
-READY TO CLAIM GRANT *B11: Implemented responsive design that works on mobile devices (320px+ width)
-Assessment: Application is usable and content remains accessible when viewed at 320px width and larger
-
-READY TO CLAIM GRANT *B12: Added basic accessibility features (alt text, proper headings, sufficient color contrast)
-Assessment: Images have alt text, heading hierarchy is logical (h1->h2->h3), text/background color contrast ratio meets WCAG guidelines
-
-CLAIMED I15
-CLAIMED I16
-CLAIMED I17
-
-I13
-I14
-GRANT - I22 almost done
-I19
-I26
-
-S39
-S44
+INCOMPLETE S30 \
+INCOMPLETE S31 \
+INCOMPLETE S32 \
+INCOMPLETE S33 \
+INCOMPLETE S34 \
+INCOMPLETE S35 \
+INCOMPLETE S36 \
+INCOMPLETE S37 \
+INCOMPLETE S38 \
+INCOMPLETE S39 \
+INCOMPLETE S40 \
+INCOMPLETE S41 \
+INCOMPLETE S42 \
+INCOMPLETE S43 \
+INCOMPLETE S44 \
+INCOMPLETE S45 

@@ -1,52 +1,39 @@
 const locations = [
-    { id: "dhall", name: "D-Hall", cuisine: "assortment", campus: "Main Campus" },
-    { id: "ehall", name: "E-Hall", cuisine: "assortment", campus: "East Campus" },
-    { id: "dukes", name: "Dukes Dining", cuisine: "assortment", campus: "Main Campus" },
-    { id: "festival", name: "Festival Food Court", cuisine: "assortment", campus: "East Campus" },
-
-    { id: "freshens_urec", name: "Freshens UREC Cafe", cuisine: "bowls", campus: "East Campus" },
-    { id: "heirloom", name: "Heirloom Pizza", cuisine: "italian", campus: "Dukes Dining" },
-    { id: "java_city", name: "Java City", cuisine: "cafe", campus: "D-Hall" },
-    { id: "market64", name: "Market 64", cuisine: "convenience", campus: "D-Hall" },
-
-    { id: "panda_express", name: "Panda Express", cuisine: "asian", campus: "Dukes Dining" },
-    { id: "panera", name: "Panera", cuisine: "american", campus: "Dukes Dining" },
-    { id: "steak_n_shake", name: "Steak n Shake", cuisine: "american", campus: "D-Hall" },
-    { id: "tacodillo", name: "Tacodillo", cuisine: "mexican", campus: "Dukes Dining" },
-
-    { id: "tlc", name: "Tenders Love Chicken", cuisine: "american", campus: "East Campus" },
-    { id: "dunkin", name: "Dunkin", cuisine: "cafe", campus: "Main Campus" },
-    { id: "bistro1908", name: "Bistro 1908", cuisine: "american", campus: "Main Campus" },
-
-    { id: "starbucks_rose", name: "Starbucks Rose Library", cuisine: "cafe", campus: "East Campus" },
-    { id: "starbucks_truck", name: "Starbucks Truck", cuisine: "cafe", campus: "Main Campus" },
-
-    { id: "mr_chips", name: "Mr Chips POD", cuisine: "convenience", campus: "Main Campus" },
-    { id: "pod_jennings", name: "POD Jennings Hall", cuisine: "convenience", campus: "East Campus" },
-
-    { id: "den_dennys", name: "The Den by Denny's", cuisine: "american", campus: "Dukes Dining" },
-    { id: "blue_ridge", name: "Blue Ridge Innovations", cuisine: "bowls", campus: "Dukes Dining" },
-
-    { id: "freshens_dhall", name: "Freshens D-Hall", cuisine: "bowls", campus: "D-Hall" },
-    { id: "corner_bistro", name: "Corner Bistro", cuisine: "american", campus: "Main Campus" },
-
-    { id: "chickfila_dhall", name: "Chick-fil-A D-Hall", cuisine: "american", campus: "D-Hall" },
-    { id: "pod_forbes", name: "POD Forbes Center", cuisine: "convenience", campus: "Main Campus" },
-
-    { id: "pod_king", name: "POD King Hall", cuisine: "convenience", campus: "East Campus" },
-    { id: "subway_grace", name: "Subway Grace Street", cuisine: "american", campus: "Main Campus" },
-
-    { id: "merge_coffee", name: "Merge Coffee", cuisine: "cafe", campus: "Main Campus" },
-    { id: "lakeside", name: "Lakeside Cafe", cuisine: "cafe", campus: "Main Campus" },
-
-    { id: "jemmys", name: "Jemmy’s Corner Market", cuisine: "convenience", campus: "E-Hall" },
-    { id: "dukes_scoops", name: "Dukes Scoops & Cheesesteaks", cuisine: "american", campus: "D-Hall" },
-
-    { id: "chickfila_festival", name: "Chick-fil-A Festival", cuisine: "american", campus: "Festival Food Court" },
-    { id: "burgers_fries", name: "Burgers + Fries", cuisine: "american", campus: "Festival Food Court" },
-
-    { id: "ignite", name: "Ignite", cuisine: "italian", campus: "Festival Food Court" },
-    { id: "madison_press", name: "Madison Press", cuisine: "american", campus: "Festival Food Court" }
+    { id: "dhall", name: "D-Hall", cuisine: "assortment", campus: "Main Campus", placeId: "ChIJb7HfUeyTtIkRDmjtNXb5XUw" },
+    { id: "ehall", name: "E-Hall", cuisine: "assortment", campus: "East Campus", placeId: "ChIJUbvCtJSStIkREfunIrV2pS4" },
+    { id: "dukes", name: "Dukes Dining", cuisine: "assortment", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "festival", name: "Festival Food Court", cuisine: "assortment", campus: "East Campus", placeId: "ChIJFTpZZPeTtIkRsDFhwXFVSg0" },
+    { id: "freshens_urec", name: "Freshens UREC Cafe", cuisine: "bowls", campus: "East Campus", placeId: "NO_REVIEWS" },
+    { id: "heirloom", name: "Heirloom Pizza", cuisine: "italian", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+    { id: "java_city", name: "Java City", cuisine: "cafe", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "market64", name: "Market 64", cuisine: "convenience", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "panda_express", name: "Panda Express", cuisine: "asian", campus: "Dukes Dining", placeId: "ChIJiw6FVTCTtIkR02Jx383iL2Q" },
+    { id: "panera", name: "Panera", cuisine: "american", campus: "Dukes Dining", placeId: "ChIJX8U_XRyTtIkRMzah1pKAd3g" },
+    { id: "steak_n_shake", name: "Steak n Shake", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "tacodillo", name: "Tacodillo", cuisine: "mexican", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+    { id: "tlc", name: "Tenders Love Chicken", cuisine: "american", campus: "East Campus", placeId: "NO_REVIEWS" },
+    { id: "dunkin", name: "Dunkin", cuisine: "cafe", campus: "Main Campus", placeId: "ChIJ_6JuSMOStIkRD7_N_m-07y0" },
+    { id: "bistro1908", name: "Bistro 1908", cuisine: "american", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "starbucks_rose", name: "Starbucks Rose Library", cuisine: "cafe", campus: "East Campus", placeId: "ChIJhf6TwpSStIkRpLC9-Qx-CYw" },
+    { id: "starbucks_truck", name: "Starbucks Truck", cuisine: "cafe", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "mr_chips", name: "Mr Chips POD", cuisine: "convenience", campus: "Main Campus", placeId: "ChIJCxE8i8KStIkRcvZgxlPn1yk" },
+    { id: "pod_jennings", name: "POD Jennings Hall", cuisine: "convenience", campus: "East Campus", placeId: "NO_REVIEWS" },
+    { id: "den_dennys", name: "The Den by Denny's", cuisine: "american", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+    { id: "blue_ridge", name: "Blue Ridge Innovations", cuisine: "bowls", campus: "Dukes Dining", placeId: "NO_REVIEWS" },
+    { id: "freshens_dhall", name: "Freshens D-Hall", cuisine: "bowls", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "corner_bistro", name: "Corner Bistro", cuisine: "american", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "chickfila_dhall", name: "Chick-fil-A D-Hall", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "pod_forbes", name: "POD Forbes Center", cuisine: "convenience", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "pod_king", name: "POD King Hall", cuisine: "convenience", campus: "East Campus", placeId: "NO_REVIEWS" },
+    { id: "subway_grace", name: "Subway Grace Street", cuisine: "american", campus: "Main Campus", placeId: "ChIJXYqag9uStIkRA552BE4bDZk" },
+    { id: "merge_coffee", name: "Merge Coffee", cuisine: "cafe", campus: "Main Campus", placeId: "ChIJ8ZQousXttIkR2F38QF8inYU" },
+    { id: "lakeside", name: "Lakeside Cafe", cuisine: "cafe", campus: "Main Campus", placeId: "NO_REVIEWS" },
+    { id: "jemmys", name: "Jemmy’s Corner Market", cuisine: "convenience", campus: "E-Hall", placeId: "NO_REVIEWS" },
+    { id: "dukes_scoops", name: "Dukes Scoops & Cheesesteaks", cuisine: "american", campus: "D-Hall", placeId: "NO_REVIEWS" },
+    { id: "chickfila_festival", name: "Chick-fil-A Festival", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+    { id: "burgers_fries", name: "Burgers + Fries", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+    { id: "ignite", name: "Ignite", cuisine: "italian", campus: "Festival Food Court", placeId: "NO_REVIEWS" },
+    { id: "madison_press", name: "Madison Press", cuisine: "american", campus: "Festival Food Court", placeId: "NO_REVIEWS" }
 ];
 
 
@@ -61,6 +48,10 @@ const modal = document.getElementById("review-modal");
 const closeModal = document.getElementById("close-modal");
 const reviewForm = document.getElementById("review-form");
 const confirmationMsg = document.getElementById("confirmation-msg");
+
+// Global variables
+let allCards = [];
+let allReviewCards = [];
 
 // Helper: get a card's rating number
 function getRating(card) {
@@ -114,9 +105,21 @@ function updateCards() {
 }
 
 // Event Listeners for search, sort, and cuisine
-searchInput.addEventListener("input", updateCards);
-sortSelect.addEventListener("change", updateCards);
-cuisineSelect.addEventListener("change", updateCards);
+function setupFilterListeners() {
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage === 'reviews.html') {
+        searchInput.addEventListener("input", updateReviewCards);
+        sortSelect.addEventListener("change", updateReviewCards);
+        cuisineSelect.addEventListener("change", updateReviewCards);
+    } else {
+        searchInput.addEventListener("input", updateCards);
+        sortSelect.addEventListener("change", updateCards);
+        cuisineSelect.addEventListener("change", updateCards);
+    }
+}
+
+setupFilterListeners();
 
 // Modal: Open when Submit a Review is clicked
 submitBtn.addEventListener("click", function () {
@@ -142,38 +145,36 @@ reviewForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const hall = document.getElementById("dining-hall").value.trim().toLowerCase();
-    const newRating = parseFloat(document.getElementById("star-rating").value);
+    const name = document.getElementById("reviewer-name").value.trim();
+    const rating = parseFloat(document.getElementById("star-rating").value);
+    const text = document.getElementById("review-text").value.trim();
 
-    updateCard(hall, newRating);
+    const review = {
+        hallId: hall,
+        name: name,
+        rating: rating,
+        text: text,
+        date: new Date().toISOString(),
+        local: true
+    };
+
+    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.push(review);
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+
+    // Check which page we're on and refresh accordingly
+    const currentPage = window.location.pathname.split('/').pop();
+    if (currentPage === 'reviews.html') {
+        displayUserReviews();
+    } else {
+        createCards();
+        updateCards();
+    }
 
     reviewForm.style.display = "none";
     confirmationMsg.style.display = "block";
-
-    updateCards();
-
     reviewForm.reset();
 });
-
-function updateCard(hallId, newRating) {
-    allCards.forEach(card => {
-
-        const id = card.getAttribute("data-id");
-
-        if (id === hallId) {
-
-            let current = parseFloat(card.getAttribute("data-rating"));
-
-            let updated = isNaN(current)
-                ? newRating
-                : (current + newRating) / 2;
-
-            card.setAttribute("data-rating", updated.toFixed(1));
-
-            card.querySelector(".rating").textContent = updated.toFixed(1);
-            card.querySelector(".stars").innerHTML = generateStars(updated);
-        }
-    });
-}
 
 function generateStars(rating) {
     let stars = "";
@@ -190,37 +191,235 @@ function generateStars(rating) {
     return stars;
 }
 
+function getReviews() {
+    return JSON.parse(localStorage.getItem("reviews")) || [];
+}
+
+function clearAllReviews() {
+    localStorage.removeItem("reviews");
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("google_imported_")) {
+            localStorage.removeItem(key);
+        }
+    });
+
+    // Reset filters to default
+    searchInput.value = "";
+    sortSelect.value = "newest";
+    cuisineSelect.value = "all";
+
+    reviewsGrid.innerHTML = "";
+
+
+    displayUserReviews();
+    updateReviewCards();
+}
+
+function getAverageRating(hallId) {
+    const reviews = getReviews().filter(r => r.hallId === hallId);
+
+    if (reviews.length === 0) return null;
+
+    const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
+    return sum / reviews.length;
+}
+
+function getReviewCount(hallId) {
+    return getReviews().filter(r => r.hallId === hallId).length;
+}
+
+function updateReviewCards() {
+    const searchText = searchInput.value.toLowerCase();
+    const selectedCuisine = cuisineSelect.value.toLowerCase();
+    const selectedSort = sortSelect.value;
+
+    // Filter cards based on search and cuisine
+    let visibleCards = allReviewCards.filter(card => {
+        const hallName = card.getAttribute("data-hall-name");
+        const reviewer = card.getAttribute("data-reviewer");
+        const cuisine = card.getAttribute("data-cuisine");
+
+        const matchesSearch = hallName.includes(searchText) || reviewer.includes(searchText);
+        const matchesCuisine = selectedCuisine === "all" || cuisine === selectedCuisine;
+
+        return matchesSearch && matchesCuisine;
+    });
+
+    // Sort the filtered cards
+    visibleCards.sort((a, b) => {
+        switch (selectedSort) {
+            case "newest":
+                return new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date"));
+            case "oldest":
+                return new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date"));
+            case "highest":
+                return parseFloat(b.getAttribute("data-rating")) - parseFloat(a.getAttribute("data-rating"));
+            case "lowest":
+                return parseFloat(a.getAttribute("data-rating")) - parseFloat(b.getAttribute("data-rating"));
+            case "az":
+                return a.getAttribute("data-hall-name").localeCompare(b.getAttribute("data-hall-name"));
+            default:
+                return 0;
+        }
+    });
+
+    // Get the reviews grid
+    const reviewsGrid = document.getElementById("reviews-grid");
+
+    // If there are no review cards loaded, keep the default message in place
+    if (allReviewCards.length === 0) {
+        return;
+    }
+
+    // Clear the grid
+    reviewsGrid.innerHTML = "";
+
+    if (visibleCards.length === 0) {
+        reviewsGrid.innerHTML = `
+            <article class="card">
+                <h2 class="card-name">No reviews found</h2>
+                <p class="empty-text">Try a different search or filter.</p>
+            </article>
+        `;
+        return;
+    }
+
+    // Re-append cards in sorted order
+    visibleCards.forEach(card => {
+        reviewsGrid.appendChild(card);
+    });
+}
+
+function displayUserReviews() {
+    const reviewsGrid = document.getElementById("reviews-grid");
+    if (!reviewsGrid) return;
+
+    const allReviews = getReviews();
+    // Filter to only show local reviews (user-submitted, not imported)
+    const reviews = allReviews.filter(review => review.local === true);
+
+    if (reviews.length === 0) {
+        // Keep the default "No Reviews Yet" message
+        return;
+    }
+
+    // Clear the default message
+    reviewsGrid.innerHTML = "";
+
+    // Create cards for each review (don't sort here - updateReviewCards will handle sorting)
+    allReviewCards = [];
+    reviews.forEach(review => {
+        const card = document.createElement("article");
+        card.classList.add("card");
+
+        // Find the dining hall name and cuisine
+        const hall = locations.find(loc => loc.id === review.hallId);
+        const hallName = hall?.name || review.hallId;
+        const hallCuisine = hall?.cuisine || "unknown";
+
+        const starsHTML = generateStars(review.rating);
+        const date = new Date(review.date).toLocaleDateString();
+
+        card.innerHTML = `
+            <h2 class="card-name">${hallName}</h2>
+            <div class="stars">${starsHTML}</div>
+            <p class="review-text">"${review.text}"</p>
+            <div class="review-meta">
+                <span class="reviewer">By: ${review.name}</span>
+                <span class="review-date">${date}</span>
+            </div>
+        `;
+
+        // Store review data on the card for filtering
+        card.setAttribute("data-hall-name", hallName.toLowerCase());
+        card.setAttribute("data-reviewer", review.name.toLowerCase());
+        card.setAttribute("data-rating", review.rating);
+        card.setAttribute("data-cuisine", hallCuisine);
+        card.setAttribute("data-date", review.date);
+
+        reviewsGrid.appendChild(card);
+        allReviewCards.push(card);
+    });
+}
+
+
 function createCards() {
     cardGrid.innerHTML = "";
 
     locations.forEach(loc => {
         const card = document.createElement("article");
         card.classList.add("card");
+        card.setAttribute("tabindex", "0");
 
         card.setAttribute("data-name", loc.name);
         card.setAttribute("data-id", loc.id);
-        card.setAttribute("data-rating", "");
         card.setAttribute("data-cuisine", loc.cuisine);
 
+        const avg = getAverageRating(loc.id);
+        const count = getReviewCount(loc.id);
+
+        let starsHTML;
+        let ratingText;
+
+        if (avg === null) {
+            card.setAttribute("data-rating", -1);
+            starsHTML = "No ratings yet";
+            ratingText = "Unrated";
+        } else {
+            card.setAttribute("data-rating", avg.toFixed(1));
+            starsHTML = generateStars(avg);
+            ratingText = `${avg.toFixed(1)} (${count})`;
+        }
+
         card.innerHTML = `
-            <h3 class="card-name">${loc.name}</h3>
-            <div class="stars">No ratings yet</div>
+            <h2 class="card-name">${loc.name}</h2>
+            <div class="stars">${starsHTML}</div>
             <span class="tag">${loc.cuisine}</span>
             <div class="card-footer">
                 <span class="campus">${loc.campus}</span>
-                <span class="rating">Unrated</span>
+                <span class="rating">${ratingText}</span>
             </div>
         `;
+
+        card.style.cursor = "pointer";
+        card.addEventListener("click", function () {
+            window.location.href = `location.html?id=${loc.id}`;
+        });
+
+        // Add keyboard accessibility
+        card.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.href = `location.html?id=${loc.id}`;
+            }
+        });
 
         cardGrid.appendChild(card);
     });
 
     allCards = Array.from(document.querySelectorAll(".card"));
-
     locationCount.textContent = allCards.length + " locations";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    createCards();
-    updateCards();
+    // Check which page we're on
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage === 'reviews.html') {
+        displayUserReviews();
+
+        const clearButton = document.getElementById("clear-reviews-btn");
+        if (clearButton) {
+            clearButton.addEventListener("click", function () {
+                if (confirm("Delete all saved reviews and imported review data?")) {
+                    clearAllReviews();
+                }
+            });
+        }
+
+        updateReviewCards(); // Show all cards initially
+    } else if (currentPage === 'index.html' || currentPage === '') {
+        createCards();
+        updateCards();
+    }
 });
