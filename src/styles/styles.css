@@ -195,6 +195,28 @@ section > .card:hover {
     color: #333;
 }
 
+/* Delete Review Button */
+.delete-review-btn {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-review-btn:hover {
+    background-color: #c9302c;
+}
+
+.delete-review-btn:focus {
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
+}
+
 /* Modal Overlay */
 .modal {
     display: none;
