@@ -205,12 +205,32 @@ function deleteReview(hallId, date, name) {
 
 function clearVisibleReviews() {
     let reviews = getReviews();
-    if (cuisineSelect.value !== 'all') {
-        reviews = reviews.filter(r => getCuisineType(r.hallId) !== cuisineSelect.value);
-    } else {
-        reviews = [];
-    }
-    localStorage.setItem("reviews", JSON.stringify(reviews));
+    const searchText = searchInput.value.toLowerCase();
+    const selectedCuisine = cuisineSelect.value.toLowerCase();
+
+    // Filter reviews to only those that would be visible with current filters
+    reviews = reviews.filter(review => {
+        const hall = locations.find(loc => loc.id === review.hallId);
+        const hallName = hall?.name || review.hallId;
+        const hallCuisine = hall?.cuisine || "unknown";
+
+        const matchesSearch = hallName.toLowerCase().includes(searchText) || review.name.toLowerCase().includes(searchText);
+        const matchesCuisine = selectedCuisine === "all" || hallCuisine === selectedCuisine;
+
+        return matchesSearch && matchesCuisine;
+    });
+
+    // Remove the filtered reviews from localStorage
+    let allReviews = getReviews();
+    allReviews = allReviews.filter(review => {
+        return !reviews.some(visibleReview => 
+            visibleReview.hallId === review.hallId && 
+            visibleReview.date === review.date && 
+            visibleReview.name === review.name
+        );
+    });
+
+    localStorage.setItem("reviews", JSON.stringify(allReviews));
 
     displayUserReviews();
     updateReviewCards();
