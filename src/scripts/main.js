@@ -195,21 +195,22 @@ function getReviews() {
     return JSON.parse(localStorage.getItem("reviews")) || [];
 }
 
-function clearAllReviews() {
-    localStorage.removeItem("reviews");
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith("google_imported_")) {
-            localStorage.removeItem(key);
-        }
-    });
+function deleteReview(hallId, date, name) {
+    let reviews = getReviews();
+    reviews = reviews.filter(r => !(r.hallId === hallId && r.date === date && r.name === name));
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+    displayUserReviews();
+    updateReviewCards();
+}
 
-    // Reset filters to default
-    searchInput.value = "";
-    sortSelect.value = "newest";
-    cuisineSelect.value = "all";
-
-    reviewsGrid.innerHTML = "";
-
+function clearVisibleReviews() {
+    let reviews = getReviews();
+    if (cuisineSelect.value !== 'all') {
+        reviews = reviews.filter(r => getCuisineType(r.hallId) !== cuisineSelect.value);
+    } else {
+        reviews = [];
+    }
+    localStorage.setItem("reviews", JSON.stringify(reviews));
 
     displayUserReviews();
     updateReviewCards();
@@ -226,6 +227,11 @@ function getAverageRating(hallId) {
 
 function getReviewCount(hallId) {
     return getReviews().filter(r => r.hallId === hallId).length;
+}
+
+function getCuisineType(hallId) {
+    const loc = locations.find(l => l.id === hallId);
+    return loc ? loc.cuisine : "unknown";
 }
 
 function updateReviewCards() {
@@ -299,7 +305,16 @@ function displayUserReviews() {
     const reviews = allReviews.filter(review => review.local === true);
 
     if (reviews.length === 0) {
-        // Keep the default "No Reviews Yet" message
+        // Show the default "No Reviews Yet" message
+        reviewsGrid.innerHTML = `
+            <div class="card">
+                <h2 class="card-name">No Reviews Yet</h2>
+                <p class="empty-text">
+                    You haven't submitted any reviews yet.
+                </p>
+            </div>
+        `;
+        allReviewCards = [];
         return;
     }
 
@@ -320,6 +335,11 @@ function displayUserReviews() {
         const starsHTML = generateStars(review.rating);
         const date = new Date(review.date).toLocaleDateString();
 
+        const currentPage = window.location.pathname.split('/').pop();
+        const deleteButtonHTML = currentPage === 'reviews.html' 
+            ? `<button type="button" class="delete-review-btn" aria-label="Delete this review">Delete</button>`
+            : '';
+
         card.innerHTML = `
             <h2 class="card-name">${hallName}</h2>
             <div class="stars">${starsHTML}</div>
@@ -328,6 +348,7 @@ function displayUserReviews() {
                 <span class="reviewer">By: ${review.name}</span>
                 <span class="review-date">${date}</span>
             </div>
+            ${deleteButtonHTML}
         `;
 
         // Store review data on the card for filtering
@@ -336,6 +357,19 @@ function displayUserReviews() {
         card.setAttribute("data-rating", review.rating);
         card.setAttribute("data-cuisine", hallCuisine);
         card.setAttribute("data-date", review.date);
+        card.setAttribute("data-hall-id", review.hallId);
+        card.setAttribute("data-review-name", review.name);
+
+        // Add delete button listener
+        const deleteBtn = card.querySelector(".delete-review-btn");
+        if (deleteBtn) {
+            deleteBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                if (confirm(`Delete review for ${hallName}?`)) {
+                    deleteReview(review.hallId, review.date, review.name);
+                }
+            });
+        }
 
         reviewsGrid.appendChild(card);
         allReviewCards.push(card);
@@ -410,8 +444,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const clearButton = document.getElementById("clear-reviews-btn");
         if (clearButton) {
             clearButton.addEventListener("click", function () {
-                if (confirm("Delete all saved reviews and imported review data?")) {
-                    clearAllReviews();
+                if (confirm("Delete all visible reviews?")) {
+                    clearVisibleReviews();
                 }
             });
         }
