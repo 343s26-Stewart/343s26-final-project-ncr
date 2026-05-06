@@ -594,3 +594,30 @@ section > .card:hover {
     grid-area: rating;
     justify-self: start;
 }
+
+
+
+/* STUFF FOR THE CANVAS CHARTS */
+.chart-card {
+    background-color: #f4f7fb; /* different from main page */
+    border: 2px solid #d0d7e2;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.chart-controls {
+    margin-bottom: 10px;
+}
+
+.chart-controls button {
+    margin-right: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.chart-controls button:hover {
+    background-color: #bbb;
+}

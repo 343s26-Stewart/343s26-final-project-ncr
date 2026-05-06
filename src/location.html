@@ -59,6 +59,22 @@
             </div>
 
             <div id="reviews-container"></div>
+
+            <div id="chart-section" class="card chart-card" style="display:none;">
+                <h3>Review Analytics</h3>
+
+                <div class="chart-controls">
+                    <button type="button" id="bar-chart-btn">Bar</button>
+                    <button type="button" id="pie-chart-btn">Pie</button>
+                    <button type="button" id="trend-chart-btn">Trend</button>
+                </div>
+
+                <canvas id="reviews-chart" width="500" height="300"></canvas>
+            </div>
+
+            <button type="button" id="toggle-chart-btn" class="submit-btn">
+                Show Chart
+            </button>
         </section>
 
     </main>
@@ -166,6 +182,20 @@
 
         function markGoogleImported(hallId) {
             localStorage.setItem(`google_imported_${hallId}`, "true");
+        }
+
+        function getRatingCounts() {
+            const reviews = getFilteredReviews();
+            const counts = [0, 0, 0, 0, 0];
+
+            reviews.forEach(r => {
+                const rating = Math.round(r.rating);
+                if (rating >= 1 && rating <= 5) {
+                    counts[rating - 1]++;
+                }
+            });
+
+            return counts;
         }
 
         /* =========================
@@ -289,7 +319,7 @@
                         name: r.authorAttribution?.displayName || "Google User",
                         rating: r.rating,
                         text: r.text,
-                        date: new Date().toISOString(),
+                        date: new Date(r.time * 1000).toISOString(),
                         source: "google"
                     }));
 
@@ -329,6 +359,7 @@
 
                 renderReviews();
                 updateOverview();
+                if (chartVisible) drawBarChartAnimated();
 
                 document.getElementById("review-form").style.display = "none";
                 document.getElementById("confirmation-msg").style.display = "block";
@@ -389,6 +420,229 @@
         setupReviewForm();
         renderReviews();
         updateOverview();
+
+
+
+
+        /* =========================
+                CANVAS LOGIC
+        ========================= */
+
+        function drawChart() {
+            const canvas = document.getElementById("reviews-chart");
+            const ctx = canvas.getContext("2d");
+
+            const reviews = getFilteredReviews();
+
+            // count ratings (1–5)
+            const counts = [0, 0, 0, 0, 0];
+
+            reviews.forEach(r => {
+                const rating = Math.round(r.rating);
+                if (rating >= 1 && rating <= 5) {
+                    counts[rating - 1]++;
+                }
+            });
+
+            // clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = 60;
+            const gap = 20;
+            const maxHeight = 200;
+
+            const maxCount = Math.max(...counts, 1);
+
+            counts.forEach((count, i) => {
+                const x = i * (barWidth + gap) + 40;
+                const height = (count / maxCount) * maxHeight;
+                const y = canvas.height - height - 30;
+
+                // draw bar
+                ctx.fillStyle = "#4CAF50";
+                ctx.fillRect(x, y, barWidth, height);
+
+                // label (1★, 2★, etc.)
+                ctx.fillStyle = "#000";
+                ctx.fillText(`${i + 1}★`, x + 15, canvas.height - 10);
+
+                // count above bar
+                ctx.fillText(count, x + 20, y - 5);
+            });
+        }
+
+        let chartVisible = false;
+
+        const toggleBtn = document.getElementById("toggle-chart-btn");
+        const chartSection = document.getElementById("chart-section");
+
+        toggleBtn.addEventListener("click", () => {
+            chartVisible = !chartVisible;
+
+            chartSection.style.display = chartVisible ? "block" : "none";
+            toggleBtn.textContent = chartVisible ? "Hide Chart" : "Show Chart";
+
+            if (chartVisible) {
+                drawBarChartAnimated(); // default chart
+            }
+        });
+
+        document.getElementById("bar-chart-btn").onclick = drawBarChartAnimated;
+        document.getElementById("pie-chart-btn").onclick = drawPieChart;
+        document.getElementById("trend-chart-btn").onclick = drawTrendChart;
+
+
+        /* =========================
+                DIFFERENT CHARTS
+        ========================= */
+
+        /* ANIMATED BAR CHART */
+
+        function drawBarChartAnimated() {
+            const canvas = document.getElementById("reviews-chart");
+            const ctx = canvas.getContext("2d");
+
+            const counts = getRatingCounts();
+            const max = Math.max(...counts, 1);
+
+            let progress = 0;
+
+            function animate() {
+                progress += 0.05;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                counts.forEach((count, i) => {
+                    const barWidth = 60;
+                    const gap = 20;
+                    const x = i * (barWidth + gap) + 40;
+
+                    const targetHeight = (count / max) * 200;
+                    const height = targetHeight * progress;
+                    const y = canvas.height - height - 30;
+
+                    ctx.fillStyle = "#4CAF50";
+                    ctx.fillRect(x, y, barWidth, height);
+
+                    ctx.fillStyle = "#000";
+                    ctx.fillText(`${i + 1}★`, x + 15, canvas.height - 10);
+                });
+
+                if (progress < 1) requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        /* PIE CHART */
+        function drawPieChart() {
+            const canvas = document.getElementById("reviews-chart");
+            const ctx = canvas.getContext("2d");
+
+            const counts = getRatingCounts();
+            const total = counts.reduce((a, b) => a + b, 0);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (total === 0) {
+                ctx.fillText("No review data", 180, 150);
+                return;
+            }
+
+            let startAngle = 0;
+            const colors = ["#f44336", "#ff9800", "#ffc107", "#8bc34a", "#4caf50"];
+
+            // draw pie
+            counts.forEach((count, i) => {
+                const sliceAngle = (count / total) * 2 * Math.PI;
+
+                ctx.beginPath();
+                ctx.moveTo(180, 150);
+                ctx.arc(180, 150, 100, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+
+                startAngle += sliceAngle;
+            });
+
+            // legend
+            ctx.font = "14px Arial";
+
+            counts.forEach((count, i) => {
+                const y = 50 + i * 30;
+
+                ctx.fillStyle = colors[i];
+                ctx.fillRect(330, y, 18, 18);
+
+                ctx.fillStyle = "#000";
+                ctx.fillText(`${i + 1}★ (${count})`, 355, y + 14);
+            });
+        }
+
+        /* TREND CHART */
+        function drawTrendChart() {
+            const canvas = document.getElementById("reviews-chart");
+            const ctx = canvas.getContext("2d");
+
+            // sort OLDEST → NEWEST
+            const reviews = getFilteredReviews()
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (reviews.length === 0) return;
+
+            const padding = 40;
+            const width = canvas.width - padding * 2;
+            const height = canvas.height - padding * 2;
+
+            const stepX = reviews.length > 1 ? width / (reviews.length - 1) : 0;
+
+            /* ===== DRAW AXES ===== */
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            /* ===== LABEL Y AXIS (RATING 1–5) ===== */
+            for (let i = 1; i <= 5; i++) {
+                const y = canvas.height - padding - (i / 5) * height;
+                ctx.fillText(i.toString(), 10, y + 3);
+            }
+
+            /* ===== DRAW LINE ===== */
+            ctx.beginPath();
+            ctx.strokeStyle = "#2196F3";
+
+            reviews.forEach((r, i) => {
+                const x = padding + i * stepX;
+                const y = canvas.height - padding - (r.rating / 5) * height;
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+
+            ctx.stroke();
+
+            /* ===== DRAW POINTS ===== */
+            reviews.forEach((r, i) => {
+                const x = padding + i * stepX;
+                const y = canvas.height - padding - (r.rating / 5) * height;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            /* ===== DATE LABELS (start + end only) ===== */
+            const firstDate = new Date(reviews[0].date).toLocaleDateString();
+            const lastDate = new Date(reviews[reviews.length - 1].date).toLocaleDateString();
+
+            ctx.fillText(firstDate, padding, canvas.height - 10);
+            ctx.fillText(lastDate, canvas.width - padding - 60, canvas.height - 10);
+        }
     </script>
 
     <div id="map" style="display:none;"></div>
