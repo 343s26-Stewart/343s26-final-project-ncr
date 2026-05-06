@@ -210,10 +210,14 @@ section > .card:hover {
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.favorite-btn:hover,
+.favorite-btn:hover {
+    background-color: #f7f1ec;
+}
+
 .favorite-btn:focus {
     background-color: #f7f1ec;
-    outline: none;
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
 }
 
 .favorite-btn.favorited {

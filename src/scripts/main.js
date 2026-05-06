@@ -535,7 +535,7 @@ function createCards() {
         card.innerHTML = `
             <div class="card-top">
                 <h2 class="card-name">${loc.name}</h2>
-                <button type="button" class="favorite-btn ${favorite ? 'favorited' : ''}" aria-label="Toggle favorite">
+                <button type="button" class="favorite-btn ${favorite ? 'favorited' : ''}" aria-label="${favorite ? 'Remove' : 'Add'} ${loc.name} from favorites">
                     ${favorite ? '♥' : '♡'}
                 </button>
             </div>
@@ -562,9 +562,9 @@ function createCards() {
             window.location.href = `location.html?id=${loc.id}`;
         });
 
-        // Add keyboard accessibility
+        // Add keyboard accessibility (but don't trigger if favorite button is focused)
         card.addEventListener("keydown", function (event) {
-            if (event.key === "Enter" || event.key === " ") {
+            if ((event.key === "Enter" || event.key === " ") && event.target === card) {
                 event.preventDefault();
                 window.location.href = `location.html?id=${loc.id}`;
             }
