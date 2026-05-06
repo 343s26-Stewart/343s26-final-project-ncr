@@ -44,6 +44,7 @@ const cuisineSelect = document.getElementById("cuisine-select");
 const cardGrid = document.getElementById("card-grid");
 const locationCount = document.getElementById("location-count");
 const submitBtn = document.getElementById("submit-btn");
+const favoritesOnlyBtn = document.getElementById("favorites-only-btn");
 const modal = document.getElementById("review-modal");
 const closeModal = document.getElementById("close-modal");
 const reviewForm = document.getElementById("review-form");
@@ -52,6 +53,7 @@ const confirmationMsg = document.getElementById("confirmation-msg");
 // Global variables
 let allCards = [];
 let allReviewCards = [];
+let showFavoritesOnly = false;
 
 // Helper: get a card's rating number
 function getRating(card) {
@@ -75,11 +77,12 @@ function updateCards() {
     const selectedCuisine = cuisineSelect.value.toLowerCase();
     const selectedSort = sortSelect.value;
 
-    // Step 1: Filter cards based on search and cuisine
+    // Step 1: Filter cards based on search, cuisine, and favorites
     let visibleCards = allCards.filter(function (card) {
         const matchesSearch = getName(card).includes(searchText);
         const matchesCuisine = selectedCuisine === "all" || getCuisine(card) === selectedCuisine;
-        return matchesSearch && matchesCuisine;
+        const matchesFavorite = !showFavoritesOnly || isFavoriteHall(card.getAttribute("data-id"));
+        return matchesSearch && matchesCuisine && matchesFavorite;
     });
 
     visibleCards.sort(function (a, b) {
@@ -193,6 +196,37 @@ function generateStars(rating) {
 
 function getReviews() {
     return JSON.parse(localStorage.getItem("reviews")) || [];
+}
+
+function getFavoriteHalls() {
+    return JSON.parse(localStorage.getItem("favoriteHalls")) || [];
+}
+
+function saveFavoriteHalls(favorites) {
+    localStorage.setItem("favoriteHalls", JSON.stringify(favorites));
+}
+
+function isFavoriteHall(hallId) {
+    return getFavoriteHalls().includes(hallId);
+}
+
+function toggleFavoriteHall(hallId) {
+    const favorites = getFavoriteHalls();
+    const index = favorites.indexOf(hallId);
+
+    if (index === -1) {
+        favorites.push(hallId);
+    } else {
+        favorites.splice(index, 1);
+    }
+
+    saveFavoriteHalls(favorites);
+}
+
+function updateFavoriteButton(button, hallId) {
+    const favorite = isFavoriteHall(hallId);
+    button.classList.toggle("favorited", favorite);
+    button.innerHTML = favorite ? "♥" : "♡";
 }
 
 function deleteReview(hallId, date, name) {
@@ -425,8 +459,15 @@ function createCards() {
             ratingText = `${avg.toFixed(1)} (${count})`;
         }
 
+        const favorite = isFavoriteHall(loc.id);
+
         card.innerHTML = `
-            <h2 class="card-name">${loc.name}</h2>
+            <div class="card-top">
+                <h2 class="card-name">${loc.name}</h2>
+                <button type="button" class="favorite-btn ${favorite ? 'favorited' : ''}" aria-label="Toggle favorite">
+                    ${favorite ? '♥' : '♡'}
+                </button>
+            </div>
             <div class="stars">${starsHTML}</div>
             <span class="tag">${loc.cuisine}</span>
             <div class="card-footer">
@@ -434,6 +475,16 @@ function createCards() {
                 <span class="rating">${ratingText}</span>
             </div>
         `;
+
+        const favoriteBtn = card.querySelector(".favorite-btn");
+        if (favoriteBtn) {
+            favoriteBtn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                toggleFavoriteHall(loc.id);
+                updateFavoriteButton(favoriteBtn, loc.id);
+                updateCards();
+            });
+        }
 
         card.style.cursor = "pointer";
         card.addEventListener("click", function () {
@@ -475,6 +526,16 @@ document.addEventListener("DOMContentLoaded", function () {
     } 
     else if (currentPage === 'index.html' || currentPage === '') {
         createCards();
+
+        if (favoritesOnlyBtn) {
+            favoritesOnlyBtn.addEventListener("click", function () {
+                showFavoritesOnly = !showFavoritesOnly;
+                favoritesOnlyBtn.classList.toggle("active", showFavoritesOnly);
+                favoritesOnlyBtn.textContent = showFavoritesOnly ? "Showing Favorites" : "Show Favorites Only";
+                updateCards();
+            });
+        }
+
         updateCards();
         setupViewToggle();
     }

@@ -101,8 +101,25 @@ section > select:hover {
     cursor: pointer;
 }
 
-.submit-btn:hover {
+.submit-btn:hover,
+.submit-btn.active {
     background-color: #963d15;
+}
+
+#favorites-only-btn {
+    background-color: transparent;
+    color: #b84a1a;
+    border: 1px solid #b84a1a;
+}
+
+#favorites-only-btn.active {
+    background-color: #b84a1a;
+    color: white;
+}
+
+#favorites-only-btn:hover {
+    background-color: #b84a1a;
+    color: white;
 }
 
 /* Main Content */
@@ -174,6 +191,37 @@ section > .card:hover {
 }
 
 /* Card Footer (campus + rating) */
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.favorite-btn {
+    padding: 6px 12px;
+    background-color: #f0ede8;
+    border: 1px solid #d1c6bc;
+    border-radius: 20px;
+    color: #b84a1a;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.favorite-btn:hover,
+.favorite-btn:focus {
+    background-color: #f7f1ec;
+    outline: none;
+}
+
+.favorite-btn.favorited {
+    background-color: #b84a1a;
+    color: white;
+    border-color: #b84a1a;
+}
+
 .card-footer {
     display: flex;
     justify-content: space-between;
