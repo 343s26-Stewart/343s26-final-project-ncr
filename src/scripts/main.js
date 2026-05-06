@@ -45,6 +45,9 @@ const cardGrid = document.getElementById("card-grid");
 const locationCount = document.getElementById("location-count");
 const submitBtn = document.getElementById("submit-btn");
 const favoritesOnlyBtn = document.getElementById("favorites-only-btn");
+const downloadReviewsBtn = document.getElementById("download-reviews-btn");
+const uploadReviewsBtn = document.getElementById("upload-reviews-btn");
+const uploadReviewsInput = document.getElementById("upload-reviews-input");
 const modal = document.getElementById("review-modal");
 const closeModal = document.getElementById("close-modal");
 const reviewForm = document.getElementById("review-form");
@@ -198,6 +201,10 @@ function getReviews() {
     return JSON.parse(localStorage.getItem("reviews")) || [];
 }
 
+function getLocalReviews() {
+    return getReviews().filter(review => review.local === true);
+}
+
 function getFavoriteHalls() {
     return JSON.parse(localStorage.getItem("favoriteHalls")) || [];
 }
@@ -227,6 +234,70 @@ function updateFavoriteButton(button, hallId) {
     const favorite = isFavoriteHall(hallId);
     button.classList.toggle("favorited", favorite);
     button.innerHTML = favorite ? "♥" : "♡";
+}
+
+function downloadReviews() {
+    const reviews = getLocalReviews();
+    const blob = new Blob([JSON.stringify(reviews, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "rate-my-meal-reviews.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+function isValidReview(review) {
+    return review && typeof review === "object" &&
+        typeof review.hallId === "string" &&
+        typeof review.name === "string" &&
+        typeof review.rating === "number" &&
+        typeof review.text === "string" &&
+        typeof review.date === "string";
+}
+
+function importReviews(file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        try {
+            const data = JSON.parse(reader.result);
+            if (!Array.isArray(data)) {
+                alert("Upload failed: JSON file must contain an array of reviews.");
+                return;
+            }
+
+            const existing = getReviews();
+            const existingKeys = new Set(existing.map(r => `${r.hallId}:::${r.date}:::${r.name}`));
+            const imported = [];
+
+            data.forEach(item => {
+                if (isValidReview(item)) {
+                    const key = `${item.hallId}:::${item.date}:::${item.name}`;
+                    if (!existingKeys.has(key)) {
+                        imported.push({ ...item, local: true });
+                        existingKeys.add(key);
+                    }
+                }
+            });
+
+            if (imported.length === 0) {
+                alert("No new valid reviews were found in the upload file.");
+                return;
+            }
+
+            const merged = existing.concat(imported);
+            localStorage.setItem("reviews", JSON.stringify(merged));
+            displayUserReviews();
+            updateReviewCards();
+            alert(`Imported ${imported.length} review(s).`);
+        } catch (error) {
+            alert("Upload failed: invalid JSON file.");
+            console.error(error);
+        }
+    };
+    reader.readAsText(file);
 }
 
 function deleteReview(hallId, date, name) {
@@ -518,6 +589,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (confirm("Delete all visible reviews?")) {
                     clearVisibleReviews();
                 }
+            });
+        }
+
+        if (downloadReviewsBtn) {
+            downloadReviewsBtn.addEventListener("click", downloadReviews);
+        }
+
+        if (uploadReviewsBtn && uploadReviewsInput) {
+            uploadReviewsBtn.addEventListener("click", function () {
+                uploadReviewsInput.click();
+            });
+            uploadReviewsInput.addEventListener("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    importReviews(file);
+                }
+                uploadReviewsInput.value = "";
             });
         }
 
