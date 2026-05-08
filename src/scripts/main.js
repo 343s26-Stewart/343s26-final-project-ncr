@@ -105,7 +105,7 @@ function updateCards() {
     visibleCards.forEach(function (card) {
         card.style.display = "";
         cardGrid.appendChild(card);
-});
+    });
 
     locationCount.textContent = visibleCards.length + " locations";
 }
@@ -180,6 +180,7 @@ reviewForm.addEventListener("submit", function (event) {
     reviewForm.style.display = "none";
     confirmationMsg.style.display = "block";
     reviewForm.reset();
+    updateUserOverview();
 });
 
 function generateStars(rating) {
@@ -216,6 +217,41 @@ function saveFavoriteHalls(favorites) {
 function isFavoriteHall(hallId) {
     return getFavoriteHalls().includes(hallId);
 }
+
+/* For the user dashboard overview on the reviews tab */
+function updateUserOverview() {
+    const reviews = getLocalReviews();
+
+    const totalEl = document.getElementById("total-reviews-stat");
+    const avgEl = document.getElementById("average-rating-stat");
+    const highEl = document.getElementById("highest-rating-stat");
+    const lowEl = document.getElementById("lowest-rating-stat");
+
+    if (!totalEl) return;
+
+    if (reviews.length === 0) {
+        totalEl.textContent = "0";
+        avgEl.textContent = "0.0";
+        highEl.textContent = "-";
+        lowEl.textContent = "-";
+        return;
+    }
+
+    const ratings = reviews.map(r => r.rating);
+
+    const average =
+        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+    const highest = Math.max(...ratings);
+    const lowest = Math.min(...ratings);
+
+    totalEl.textContent = reviews.length;
+    avgEl.textContent = average.toFixed(1);
+    highEl.textContent = highest.toFixed(1);
+    lowEl.textContent = lowest.toFixed(1);
+}
+
+
 
 function toggleFavoriteHall(hallId) {
     const favorites = getFavoriteHalls();
@@ -298,6 +334,7 @@ function importReviews(file) {
         }
     };
     reader.readAsText(file);
+    updateUserOverview();
 }
 
 function deleteReview(hallId, date, name) {
@@ -306,6 +343,7 @@ function deleteReview(hallId, date, name) {
     localStorage.setItem("reviews", JSON.stringify(reviews));
     displayUserReviews();
     updateReviewCards();
+    updateUserOverview();
 }
 
 function clearVisibleReviews() {
@@ -328,17 +366,25 @@ function clearVisibleReviews() {
     // Remove the filtered reviews from localStorage
     let allReviews = getReviews();
     allReviews = allReviews.filter(review => {
-        return !reviews.some(visibleReview => 
-            visibleReview.hallId === review.hallId && 
-            visibleReview.date === review.date && 
+        return !reviews.some(visibleReview =>
+            visibleReview.hallId === review.hallId &&
+            visibleReview.date === review.date &&
             visibleReview.name === review.name
         );
     });
 
     localStorage.setItem("reviews", JSON.stringify(allReviews));
 
+    /* reset google import flags */
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("google_imported_")) {
+            localStorage.removeItem(key);
+        }
+    });
+
     displayUserReviews();
     updateReviewCards();
+    updateUserOverview();
 }
 
 function getAverageRating(hallId) {
@@ -461,7 +507,7 @@ function displayUserReviews() {
         const date = new Date(review.date).toLocaleDateString();
 
         const currentPage = window.location.pathname.split('/').pop();
-        const deleteButtonHTML = currentPage === 'reviews.html' 
+        const deleteButtonHTML = currentPage === 'reviews.html'
             ? `<button type="button" class="delete-review-btn" aria-label="Delete this review">Delete</button>`
             : '';
 
@@ -582,6 +628,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentPage === 'reviews.html') {
         displayUserReviews();
+        updateUserOverview();
 
         const clearButton = document.getElementById("clear-reviews-btn");
         if (clearButton) {
@@ -611,7 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         updateReviewCards();
         setupViewToggle();
-    } 
+    }
     else if (currentPage === 'index.html' || currentPage === '') {
         createCards();
 
