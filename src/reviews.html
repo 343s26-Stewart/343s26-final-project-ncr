@@ -24,7 +24,7 @@
 
             <div class="view-menu">
                 <button type="button" id="view-menu-btn" class="view-menu-btn" aria-label="Change view">
-                &#8943;
+                    &#8943;
                 </button>
 
                 <div id="view-menu-dropdown" class="view-menu-dropdown">
@@ -63,13 +63,45 @@
             <button type="button" class="submit-btn" id="clear-reviews-btn">Delete Shown Reviews</button>
             <button type="button" class="submit-btn" id="download-reviews-btn">Download Reviews</button>
             <button type="button" class="submit-btn" id="upload-reviews-btn">Upload Reviews</button>
-            <input id="upload-reviews-input" type="file" accept="application/json" style="display: none;" />
+            <input id="upload-reviews-input" type="file" accept="application/json" style="display: none;" >
         </section>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
         <h1 class="section-title">My Reviews</h1>
+        <section class="card summary-card" id="user-overview">
+            <h2>Your Review Stats</h2>
+
+
+            <div class="overview-stats">
+                <div class="overview-item">
+                    <span class="overview-number" id="total-reviews-stat">0</span>
+                    <span class="overview-label">Total Reviews</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="average-rating-stat">0.0</span>
+                    <span class="overview-label">Average Rating</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="highest-rating-stat">0</span>
+                    <span class="overview-label">Highest Rating</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="lowest-rating-stat">0</span>
+                    <span class="overview-label">Lowest Rating</span>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
         <div class="card-grid" id="reviews-grid">
             <div class="card">
                 <h2 class="card-name">No Reviews Yet</h2>
@@ -150,4 +182,5 @@
 
     <script src="scripts/main.js"></script>
 </body>
+
 </html>
