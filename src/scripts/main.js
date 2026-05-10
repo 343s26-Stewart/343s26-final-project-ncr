@@ -100,12 +100,14 @@ function updateCards() {
 
     allCards.forEach(function (card) {
         card.style.display = "none";
+        card.classList.remove("fade-in");
     });
 
     visibleCards.forEach(function (card) {
         card.style.display = "";
+        card.classList.add("fade-in");
         cardGrid.appendChild(card);
-});
+    });
 
     locationCount.textContent = visibleCards.length + " locations";
 }
@@ -571,6 +573,11 @@ function createCards() {
         });
 
         cardGrid.appendChild(card);
+        // Add fade-in animation on index.html
+        const currentPage = window.location.pathname.split('/').pop();
+        if (currentPage === 'index.html' || currentPage === '' || currentPage === '/') {
+            card.classList.add("fade-in");
+        }
     });
 
     allCards = Array.from(document.querySelectorAll(".card"));
