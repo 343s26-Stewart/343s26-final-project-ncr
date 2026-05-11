@@ -601,7 +601,6 @@ function createCards() {
                 event.stopPropagation();
                 toggleFavoriteHall(loc.id);
                 updateFavoriteButton(favoriteBtn, loc.id);
-                updateCards();
             });
         }
 
