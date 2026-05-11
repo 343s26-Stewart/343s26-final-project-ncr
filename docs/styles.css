@@ -1,0 +1,1061 @@
+html {
+    scrollbar-gutter: stable;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, serif;
+    background-color: #f0ede8;
+    color: #222;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-logo>a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #b84a1a;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 15px;
+}
+
+.nav-links a:hover {
+    color: #b84a1a;
+}
+
+.nav-links a.active {
+    color: #b84a1a;
+    border-bottom: 2px solid #b84a1a;
+    padding-bottom: 3px;
+}
+
+/* Search and Filter Bar */
+.search-bar {
+    background-color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-bar input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 220px;
+    width: 100%;
+    max-width: 220px;
+    box-sizing: border-box;
+}
+
+.search-bar select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    background-color: white;
+}
+
+section>select:hover {
+    border-color: #b84a1a;
+}
+
+.submit-btn {
+    padding: 9px 18px;
+    background-color: #b84a1a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.submit-btn:hover,
+.submit-btn.active {
+    background-color: #963d15;
+}
+
+#favorites-only-btn {
+    background-color: transparent;
+    color: #b84a1a;
+    border: 1px solid #b84a1a;
+}
+
+#favorites-only-btn.active {
+    background-color: #b84a1a;
+    color: white;
+}
+
+#favorites-only-btn:hover {
+    background-color: #b84a1a;
+    color: white;
+}
+
+/* Main Content Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Main Content */
+.main-content {
+    padding: 15px 30px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+.location-count {
+    font-size: 15px;
+    font-weight: normal;
+    color: #4D4D4D;
+    margin-left: 8px;
+}
+
+/* Card Grid */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+/* Individual Card */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #e0ddd8;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+section>.card:hover {
+    background-color: #f7f1ec;
+    transform: translateY(-2px);
+}
+
+.card:focus {
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
+}
+
+.card-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    color: #111;
+}
+
+/* Star Ratings */
+.stars {
+    color: #b84a1a;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Cuisine Tag */
+.tag {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: #444;
+    margin-bottom: 12px;
+}
+
+/* Card Footer (campus + rating) */
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.favorite-btn {
+    padding: 6px 12px;
+    background-color: #f0ede8;
+    border: 1px solid #d1c6bc;
+    border-radius: 20px;
+    color: #b84a1a;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.favorite-btn:hover {
+    background-color: #f7f1ec;
+}
+
+.favorite-btn:focus {
+    background-color: #f7f1ec;
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
+}
+
+.favorite-btn.favorited {
+    background-color: #b84a1a;
+    color: white;
+    border-color: #b84a1a;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.campus {
+    font-size: 13px;
+    color: #b84a1a;
+}
+
+.rating {
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #f0ede8;
+    padding: 3px 8px;
+    border-radius: 8px;
+    color: #333;
+}
+
+/* Delete Review Button */
+.delete-review-btn {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background-color: #D4403A;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-review-btn:hover {
+    background-color: #c9302c;
+}
+
+.delete-review-btn:focus {
+    outline: 2px solid #b84a1a;
+    outline-offset: 2px;
+}
+
+/* Modal Overlay */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Box */
+.modal-box {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    width: 420px;
+    position: relative;
+}
+
+.modal-box h2 {
+    margin-top: 0;
+    color: #111;
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+/* Form Fields */
+.modal-box label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-box input,
+.modal-box select,
+.modal-box textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.modal-box .submit-btn {
+    margin-top: 18px;
+    width: 100%;
+}
+
+/* Confirmation Message */
+#confirmation-msg {
+    text-align: center;
+    font-size: 16px;
+    color: #2a7a2a;
+    padding: 20px 0;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Review-specific styles */
+.review-text {
+    font-style: italic;
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #4D4D4D;
+}
+
+.reviewer {
+    font-weight: bold;
+}
+
+.review-date {
+    font-style: italic;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #4D4D4D;
+    font-size: 13px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    padding: 15px 0px;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+    .navbar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-logo {
+        grid-column: 1;
+    }
+
+    .view-menu {
+        grid-column: 2;
+        grid-row: 1;
+        margin-left: 0;
+        justify-self: end;
+    }
+
+    .nav-links {
+        grid-column: 1 / 3;
+        grid-row: 2;
+    }
+
+    .search-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .search-bar & > * {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .search-bar input,
+    .search-bar select,
+    .search-bar .submit-btn {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+
+    .search-bar input {
+        grid-column: 1 / 3;
+        max-width: none;
+    }
+
+    .search-bar .submit-btn {
+        grid-column: 1 / 3;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .search-bar input,
+    .search-bar select,
+    .search-bar .submit-btn {
+        grid-column: auto;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content,
+    .search-bar,
+    .navbar {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .modal-box {
+        width: calc(100% - 32px);
+        padding: 20px;
+    }
+
+    .summary-card {
+        margin-bottom: 20px;
+    }
+
+    /* tighten spacing inside */
+    .summary-card h1 {
+        margin-bottom: 5px;
+    }
+
+    .summary-card p {
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    /* rating line */
+    #average-rating {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1rem;
+    }
+
+    #avg-stars {
+        color: #f4b400;
+        /* same gold as your stars */
+    }
+
+    #review-count {
+        color: gray;
+        font-size: 0.9rem;
+    }
+}
+
+.reviews-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.reviews-controls select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.reviews-controls select:hover {
+    border-color: #b84a1a;
+}
+
+#reviews-container {
+    margin-top: 16px;
+}
+
+.view-menu {
+    position: relative;
+    margin-left: auto;
+}
+
+.view-menu-btn {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+    color: #444;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.view-menu-btn:hover {
+    background-color: #f7f1ec;
+    color: #b84a1a;
+}
+
+.view-menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 44px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0ddd8;
+    border-radius: 12px;
+    min-width: 135px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 20;
+    overflow: hidden;
+}
+
+.view-menu-dropdown.show {
+    display: block;
+}
+
+.view-menu-dropdown button {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    background-color: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.view-menu-dropdown button:hover,
+.view-menu-dropdown button.active {
+    background-color: #f7f1ec;
+    color: #b84a1a;
+}
+
+.card-grid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card-grid.list-view .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(80px, 0.8fr) minmax(70px, auto);
+    grid-template-areas:
+        "name stars favorite"
+        "campus rating tag";
+    align-items: center;
+    gap: 10px 16px;
+    padding: 18px 22px;
+}
+
+.card-grid.list-view .card-top {
+    display: contents;
+}
+
+.card-grid.list-view .card-name {
+    grid-area: name;
+    margin: 0;
+    min-width: 0;
+}
+
+.card-grid.list-view .favorite-btn {
+    grid-area: favorite;
+    justify-self: center;
+    align-self: center;
+    white-space: nowrap;
+}
+
+.card-grid.list-view .stars {
+    grid-area: stars;
+    margin: 0;
+    justify-self: center;
+    white-space: nowrap;
+}
+
+.card-grid.list-view .tag {
+    grid-area: tag;
+    justify-self: center;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.card-grid.list-view .card-footer {
+    display: contents;
+}
+
+.card-grid.list-view .campus {
+    grid-area: campus;
+    min-width: 0;
+}
+
+.card-grid.list-view .rating {
+    grid-area: rating;
+    justify-self: center;
+    white-space: nowrap;
+}
+
+@media (max-width: 400px) {
+    .card-grid.list-view .card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "name favorite"
+            "stars tag"
+            "campus rating";
+        gap: 8px 12px;
+        padding: 16px;
+        align-items: center;
+    }
+
+    .card-grid.list-view .card-top {
+        display: contents;
+    }
+
+    .card-grid.list-view .card-name {
+        grid-area: name;
+        margin: 0;
+        min-width: 0;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .card-grid.list-view .favorite-btn {
+        grid-area: favorite;
+        justify-self: end;
+        white-space: nowrap;
+    }
+
+    .card-grid.list-view .stars {
+        grid-area: stars;
+        justify-self: start;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .card-grid.list-view .tag {
+        grid-area: tag;
+        justify-self: end;
+        margin: 0;
+        max-width: 110px;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .card-grid.list-view .card-footer {
+        display: contents;
+    }
+
+    .card-grid.list-view .campus {
+        grid-area: campus;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .card-grid.list-view .rating {
+        grid-area: rating;
+        justify-self: end;
+        white-space: nowrap;
+    }
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-logo {
+    grid-column: 1;
+}
+
+.view-menu {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+    justify-self: end;
+}
+
+.nav-links {
+    grid-column: 1 / 3;
+    grid-row: 2;
+}
+
+
+
+/* STUFF FOR THE CANVAS CHARTS */
+.chart-card {
+    background-color: #f4f7fb;
+    /* different from main page */
+    border: 2px solid #d0d7e2;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.chart-controls {
+    margin-bottom: 10px;
+}
+
+.chart-controls button {
+    margin-right: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.chart-controls button:hover {
+    background-color: #bbb;
+}
+
+
+/* for printing preview when they click ctrl + p */
+@media print {
+
+    /* Reset page margins and colors */
+    @page {
+        margin: 0.75in;
+        size: letter;
+    }
+
+    /* General print styles */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        /* color-adjust: exact !important; */
+    }
+
+    html,
+    body {
+        background-color: white !important;
+        color: black !important;
+        font-size: 11pt;
+        line-height: 1.5;
+    }
+
+    /* Hide interactive and navigation elements */
+    .search-bar,
+    .submit-btn,
+    .modal,
+    .modal-box,
+    button,
+    input,
+    select,
+    textarea {
+        display: none !important;
+    }
+
+    /* Navigation for print */
+    .navbar {
+        border-bottom: 2px solid #000;
+        padding: 10pt 0;
+        margin-bottom: 20pt;
+    }
+
+    .nav-logo {
+        font-size: 18pt;
+        font-weight: bold;
+        color: #000 !important;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    /* Main content spacing */
+    .main-content {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Section titles */
+    .section-title {
+        font-size: 16pt;
+        font-weight: bold;
+        color: #000 !important;
+        margin-top: 15pt;
+        margin-bottom: 12pt;
+        page-break-after: avoid;
+    }
+
+    .location-count {
+        font-size: 11pt;
+        color: #333 !important;
+    }
+
+    /* Card Grid - optimize for print */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12pt;
+        page-break-inside: auto;
+    }
+
+    /* Individual Cards */
+    .card {
+        background-color: white !important;
+        border: 1.5pt solid #333 !important;
+        border-radius: 6pt;
+        padding: 10pt;
+        page-break-inside: avoid;
+        margin-bottom: 8pt;
+    }
+
+    .card-name {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #000 !important;
+        margin-bottom: 6pt;
+    }
+
+    .stars {
+        color: #000 !important;
+        font-size: 11pt;
+        margin-bottom: 6pt;
+    }
+
+    .tag {
+        border: 1pt solid #666 !important;
+        padding: 2pt 8pt;
+        font-size: 9pt;
+        color: #000 !important;
+        display: inline-block;
+        margin-bottom: 6pt;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6pt;
+        font-size: 10pt;
+    }
+
+    .campus {
+        color: #000 !important;
+        font-weight: bold;
+    }
+
+    .rating {
+        background-color: #f0f0f0 !important;
+        color: #000 !important;
+        padding: 2pt 6pt;
+        border-radius: 4pt;
+        border: 1pt solid #999;
+    }
+
+    /* About Page */
+    .empty-text {
+        font-size: 11pt;
+        color: #000 !important;
+        line-height: 1.6;
+        margin-bottom: 10pt;
+    }
+
+    .responsive-img {
+        max-width: 100%;
+        height: auto;
+        page-break-inside: avoid;
+        margin: 15pt 0;
+        border: 1pt solid #ccc;
+    }
+
+    /* Footer - show in print with page info */
+    .footer {
+        display: block !important;
+        text-align: center;
+        font-size: 9pt;
+        color: #666 !important;
+        padding: 10pt 0;
+        margin-top: 30pt;
+        border-top: 1pt solid #ccc;
+    }
+
+    /* Print header with site name */
+    body::before {
+        content: "Rate My Meal - Dining Hall Reviews";
+        display: block;
+        text-align: center;
+        font-size: 9pt;
+        color: #666;
+        padding-bottom: 5pt;
+        border-bottom: 1pt solid #ccc;
+        margin-bottom: 15pt;
+    }
+
+    /* Prevent orphans and widows */
+    p,
+    .card {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h1,
+    h2,
+    h3,
+    .section-title,
+    .card-name {
+        page-break-after: avoid;
+        orphans: 4;
+        widows: 4;
+    }
+}
+
+
+/* =========================
+    USER OVERVIEW
+========================= */
+
+#user-overview {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+}
+
+#user-overview h2 {
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+}
+
+.overview-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.overview-item {
+    background: #f8f8f8;
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+
+    transition: transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.overview-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.overview-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.35rem;
+    color: #222;
+}
+
+.overview-label {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Highest rating = green */
+#highest-rating-stat {
+    color: #2e7d32;
+}
+
+/* Lowest rating = red */
+#lowest-rating-stat {
+    color: #c62828;
+}
+
+/* Average rating = gold */
+#average-rating-stat {
+    color: #B35900;
+}
+
+#reviews-grid {
+    margin-top: 1rem;
+}

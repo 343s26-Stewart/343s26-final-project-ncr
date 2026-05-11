@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reviews - Rate My Meal</title>
+
+    <link rel="icon" href="https://fav.mhciael.com/%E2%AD%90">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-logo"><a href="index.html">Rate My Meal</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Dining Halls</a></li>
+                <li><a href="reviews.html" class="active">My Reviews</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+
+            <div class="view-menu">
+                <button type="button" id="view-menu-btn" class="view-menu-btn" aria-label="Change view">
+                    &#8943;
+                </button>
+
+                <div id="view-menu-dropdown" class="view-menu-dropdown">
+                    <button type="button" id="card-view-btn">Card View</button>
+                    <button type="button" id="list-view-btn">List View</button>
+                </div>
+            </div>
+        </nav>
+
+        <section class="search-bar" aria-label="Filter reviews">
+            <label for="search-input" class="visually-hidden">Search reviews</label>
+            <input type="text" id="search-input" placeholder="&#128269; Search reviews...">
+            <label for="sort-select" class="visually-hidden">Sort reviews</label>
+            <select id="sort-select">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="highest">Highest Rating</option>
+                <option value="lowest">Lowest Rating</option>
+                <option value="az">Dining Hall A-Z</option>
+            </select>
+
+            <label for="cuisine-select" class="visually-hidden">Filter by cuisine</label>
+            <select id="cuisine-select">
+                <option value="all">All Types</option>
+                <option value="assortment">Assortment</option>
+                <option value="american">American</option>
+                <option value="asian">Asian</option>
+                <option value="italian">Italian</option>
+                <option value="mexican">Mexican</option>
+                <option value="cafe">Cafe</option>
+                <option value="bowls">Bowls</option>
+                <option value="convenience">Convenience</option>
+            </select>
+
+            <button type="button" class="submit-btn" id="submit-btn">+ Submit a Review</button>
+            <button type="button" class="submit-btn" id="clear-reviews-btn">Delete Shown Reviews</button>
+            <button type="button" class="submit-btn" id="download-reviews-btn">Download Reviews</button>
+            <button type="button" class="submit-btn" id="upload-reviews-btn">Upload Reviews</button>
+            <input id="upload-reviews-input" type="file" accept="application/json" style="display: none;" >
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="section-title">My Reviews</h1>
+        <section class="card summary-card" id="user-overview">
+            <h2>Your Review Stats</h2>
+
+
+            <div class="overview-stats">
+                <div class="overview-item">
+                    <span class="overview-number" id="total-reviews-stat">0</span>
+                    <span class="overview-label">Total Reviews</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="average-rating-stat">0.0</span>
+                    <span class="overview-label">Average Rating</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="highest-rating-stat">0</span>
+                    <span class="overview-label">Highest Rating</span>
+                </div>
+
+                <div class="overview-item">
+                    <span class="overview-number" id="lowest-rating-stat">0</span>
+                    <span class="overview-label">Lowest Rating</span>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <div class="card-grid" id="reviews-grid">
+            <div class="card">
+                <h2 class="card-name">No Reviews Yet</h2>
+                <p class="empty-text">
+                    You haven’t submitted any reviews yet.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <aside class="modal" id="review-modal">
+        <section class="modal-box">
+            <button type="button" class="modal-close" id="close-modal" aria-label="Close review form">&#10005;</button>
+            <h2>Submit a Review</h2>
+
+            <form id="review-form">
+                <label for="dining-hall">Dining Hall</label>
+                <select id="dining-hall" required>
+                    <option value="">-- Select a dining hall --</option>
+                    <option value="dhall">D-Hall</option>
+                    <option value="ehall">E-Hall</option>
+                    <option value="dukes">Dukes Dining</option>
+                    <option value="festival">Festival Food Court</option>
+                    <option value="freshens_urec">Freshens UREC Cafe</option>
+                    <option value="heirloom">Heirloom Pizza</option>
+                    <option value="java_city">Java City</option>
+                    <option value="market64">Market 64</option>
+                    <option value="panda_express">Panda Express</option>
+                    <option value="panera">Panera</option>
+                    <option value="steak_n_shake">Steak n Shake</option>
+                    <option value="tacodillo">Tacodillo</option>
+                    <option value="tlc">Tenders Love Chicken</option>
+                    <option value="dunkin">Dunkin</option>
+                    <option value="bistro1908">Bistro 1908</option>
+                    <option value="starbucks_rose">Starbucks Rose Library</option>
+                    <option value="starbucks_truck">Starbucks Truck</option>
+                    <option value="mr_chips">Mr Chips POD</option>
+                    <option value="pod_jennings">POD Jennings Hall</option>
+                    <option value="den_dennys">The Den by Denny's</option>
+                    <option value="blue_ridge">Blue Ridge Innovations</option>
+                    <option value="freshens_dhall">Freshens D-Hall</option>
+                    <option value="corner_bistro">Corner Bistro</option>
+                    <option value="chickfila_dhall">Chick-fil-A D-Hall</option>
+                    <option value="pod_forbes">POD Forbes Center</option>
+                    <option value="pod_king">POD King Hall</option>
+                    <option value="subway_grace">Subway Grace Street</option>
+                    <option value="merge_coffee">Merge Coffee</option>
+                    <option value="lakeside">Lakeside Cafe</option>
+                    <option value="jemmys">Jemmy’s Corner Market</option>
+                    <option value="dukes_scoops">Dukes Scoops &amp; Cheesesteaks</option>
+                    <option value="chickfila_festival">Chick-fil-A Festival</option>
+                    <option value="burgers_fries">Burgers + Fries</option>
+                    <option value="ignite">Ignite</option>
+                    <option value="madison_press">Madison Press</option>
+                </select>
+
+                <label for="reviewer-name">Your Name</label>
+                <input type="text" id="reviewer-name" placeholder="e.g. Jane Smith" required>
+
+                <label for="star-rating">Rating (1-5)</label>
+                <input type="number" id="star-rating" min="1" max="5" placeholder="e.g. 4" required>
+
+                <label for="review-text">Review</label>
+                <textarea id="review-text" rows="4" placeholder="Write your review here..." required></textarea>
+
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+
+            <div id="confirmation-msg" hidden>
+                <p>&#10003; Thanks for your review! It has been submitted.</p>
+            </div>
+        </section>
+    </aside>
+
+    <footer class="footer">
+        © 2026 Rate My Meal
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
